@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function StudyList({ user, setUser, setPage, setInfo, setColor }) {
+export default function StudyList({ user, setUser, setPage, setInfo, setColor, setJob }) {
   const classes = useStyles();
   const [applied, setApplied] = React.useState(null);
   const [list, setList] = React.useState(getEducation());
@@ -46,7 +46,6 @@ export default function StudyList({ user, setUser, setPage, setInfo, setColor })
     <List className={classes.root} subheader={<ListSubheader component="div" id="nested-list-subheader">Education</ListSubheader>}>
       {list.map((job, index) => {
         const labelId = `checkbox-list-label-${job.name + job.companyName}`;
-        const labelId2 = `checkbox-list-label-${job.name + job.companyName}2`;
 
         const jobSalaryInfo = (
           <React.Fragment>
@@ -55,11 +54,10 @@ export default function StudyList({ user, setUser, setPage, setInfo, setColor })
           );
 
         return (
-          <ListItem key={job.name + job.companyName} role={undefined} dense button onClick={() => handleApply(job, index)}>
+          <ListItem key={job.name + job.companyName} role={undefined} dense button onClick={() => setJob(job)}>
             <ListItemText id={labelId} primary={`${job.name} at ${job.companyName}`} secondary={jobSalaryInfo}  />
-            <ListItemText id={labelId2} primary={`Add.: ${job.skillGrowth}`} secondary={`Req.: ${job.requirement}`}  />
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="apply" onClick={() => handleApply(job, index)}>
+              <IconButton edge="end" aria-label="apply" onClick={() => setJob(job)}>
                 <AddIcon />
               </IconButton>
             </ListItemSecondaryAction>

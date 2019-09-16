@@ -22,44 +22,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function JobList({ user, setUser, setPage, setColor, setInfo }) {
+export default function JobList({ user, setUser, setPage, setColor, setInfo, setJob }) {
   const classes = useStyles();
   const [applied, setApplied] = React.useState(null);
   const [list, setList] = React.useState(generateJobs(user));
-
-  const handleApply = (job, index) => {
-    const success = job.applyForJob(user);
-    setApplied(index);
-    job.jobMates.push(Person.generateJobMate(user));
-    job.jobMates.push(Person.generateJobMate(user));
-    job.jobMates.push(Person.generateWorkMate(user));
-    job.jobMates.push(Person.generateWorkMate(user));
-    setUser(updateUser(user));
-    if (success) {
-      setColor("success");
-      setInfo(`You just got a job: ${user.job.name} at ${user.job.companyName}`);
-      setPage(0);
-    }
-  }
 
   return (
     <List className={classes.root} subheader={<ListSubheader component="div" id="nested-list-subheader">Jobs</ListSubheader>}>
       {list.map((job, index) => {
         const labelId = `checkbox-list-label-${job.name + job.companyName}`;
-        const labelId2 = `checkbox-list-label-${job.name + job.companyName}2`;
 
         const jobSalaryInfo = (
-        <React.Fragment>
-          <NumberFormat value={job.currentSalary} thousandSeparator={true} displayType="text" prefix=" Salary: "/>
-        </React.Fragment>
+          <React.Fragment>
+            <NumberFormat value={job.currentSalary} thousandSeparator={true} displayType="text" prefix=" Salary: "/>
+          </React.Fragment>
         );
 
         return (
-          <ListItem key={job.name + job.companyName} role={undefined} dense button onClick={() => handleApply(job, index)}>
+          <ListItem key={job.name + job.companyName} role={undefined} dense button onClick={() => setJob(job)}>
             <ListItemText id={labelId} primary={`${job.name} at ${job.companyName}`} secondary={jobSalaryInfo} />
-            <ListItemText id={labelId2} primary={`Add.: ${job.skillGrowth}`} secondary={`Req.: ${job.requirement}`}  />
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="apply" onClick={() => handleApply(job, index)}>
+              <IconButton edge="end" aria-label="apply" onClick={() => setJob(job)}>
                 <AddIcon />
               </IconButton>
             </ListItemSecondaryAction>

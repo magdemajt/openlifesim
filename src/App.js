@@ -28,7 +28,7 @@ function App() {
   const [year, setYear] = useState(random(1960, 2019));
   const [page, setPage] = useState(0);
   const [user, setUser] = useState(generateUser());
-  
+
   useEffect(() => {
     const newUser = updateUser(user);
     const parents = Person.generateParents(user);

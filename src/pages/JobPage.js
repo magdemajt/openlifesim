@@ -5,6 +5,7 @@ import JobList from './components/JobList';
 import StudyList from './components/StudyList';
 import { retired, unemployed } from '../backend/database';
 import { updateUser } from '../backend/User';
+import JobDialog from './components/JobDialog';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,7 +51,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
 function JobPage ({ user, year, setUser, setPage, setColor, setInfo }) {
+  const [job, setJob] = useState(null);
+  
   const classes = useStyles();  
 
   const retire = () => {
@@ -65,12 +69,13 @@ function JobPage ({ user, year, setUser, setPage, setColor, setInfo }) {
   return (
     <Grid container className={classes.root} justify="center" alignItems="center">
       <Grid item xs={12} sm={4} md={5} className={classes.container}>
-        <JobList user={user} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />
+        <JobList user={user} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} setJob={setJob} />
       </Grid>
       <Grid item xs={12} sm={4} md={5} className={classes.container}>
-        <StudyList user={user} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />
+        <StudyList user={user} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} setJob={setJob} />
       </Grid>
       {user.age > 60 ? (<Button variant="contained" color="secondary" className={classes.button} disabled={user.job.name === "Unemployed" || user.job.name === "Retired"} onClick={retire}>Retire</Button>) : <Button variant="contained" color="secondary" disabled={user.job.name === "Unemployed"} className={classes.button} onClick={leaveJob}>Leave job</Button>}
+      <JobDialog job={job} setJob={setJob} user={user} setUser={setUser} setColor={setColor} setInfo={setInfo} setPage={setPage} />
     </Grid>
   );
 }

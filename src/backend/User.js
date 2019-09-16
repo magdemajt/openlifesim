@@ -102,13 +102,20 @@ export default class User {
     this.money += money;
   }
   addSkill = (skills) => {
-    forEach(skills, (skill, skillName) => {
-      this.skills[skillName] += skill;
-    });
+    if (typeof skills === 'number') {
+      forEach(this.skills, (skill, skillName) => {
+        this.skills[skillName] += skills;
+      });
+    }
+    if (typeof skills === 'object') {
+      forEach(skills, (skill, skillName) => {
+        this.skills[skillName] += skill;
+      });
+    }
   }
   nextYear = (setInfo, setColor, year, user = true, triggerSiblingsUpdate = true, triggerChildrenUpdate = true) => {
-    if (this.lifeStats.geniusTrait && this.job.skillGrowth > 0) {
-      this.skills += 1;
+    if (this.lifeStats.geniusTrait && this.job !== null) {
+      this.addSkill(this.job.skillGrowth);
     }
     this.job.nextYear(this);
     if (this.parents !== null && user) {

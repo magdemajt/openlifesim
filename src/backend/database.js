@@ -91,7 +91,7 @@ export const jobs = [
   new Job('Senior Software Developer', 58000, 46, 0, [{ job: 'Software Developer', yearsWorking: 1 }]),
   new Job('Corpo Software Developer', 53000, 46, 1, [{ job: 'Software Developer', yearsWorking: 1 }]),
   new Job('Corpo Senior Software Developer', 66000, 51, 0, [{ job: 'Corpo Software Developer', yearsWorking: 1 }]),
-  //Phycics
+  //Physics
   new Job('Experimental Physicist', 36000, 38, 1, [{ job: 'Physics Student', yearsWorking: 1 }]),
   new Job('Theoretical Physicist', 45000, 44, 1, [{ job: 'Physics Student', yearsWorking: 1 }]),
   new Job('Prize-winning Physicist', 60000, 50, 1, [{ job: 'Physics Student', yearsWorking: 1 }]),
@@ -172,11 +172,11 @@ export const generateHouses = (user) => {
   const houseSuggestions = filter(houses, house => (house.rooms * 40000 * house.priceCoeff <= (user.money + 10000) && house.habitable));
   const businessSuggestions = filter(houses, house => (house.rooms * 40000 * house.priceCoeff <= (user.money + 10000) && !house.habitable));
   const housesToBuy = [];
-  for (let i = 0; i<houseSuggestions.length * 3; i+=1) {
+  for (let i = 0; i < houseSuggestions.length * 3; i+=1) {
     const sampleHouse = sample(houseSuggestions);
     housesToBuy.push(new HouseOffer(sampleHouse));
   }
-  for (let i = 0; i<businessSuggestions.length * 3; i+=1) {
+  for (let i = 0; i < businessSuggestions.length * 3; i+=1) {
     const sampleBusiness = sample(businessSuggestions);
     housesToBuy.push(new HouseOffer(sampleBusiness));
   }

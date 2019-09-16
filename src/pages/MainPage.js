@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Paper, Grid, Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {reduce} from 'lodash';
+import { reduce, forEach, filter } from 'lodash';
 import NumberFormat from 'react-number-format';
 
 const useStyles = makeStyles(theme => ({
@@ -57,6 +57,19 @@ function generateText(text) {
   </React.Fragment>
   )
 }
+function generateSkills (skills) {
+  const filteredSkills = [];
+  forEach(skills, (skill, skillIndex) => {
+    if (skill > 0) {
+      filteredSkills.push(
+        <Typography color="secondary" key={skillIndex}>
+          {skillIndex.charAt(0).toUpperCase() + skillIndex.slice(1)}: {skill}
+        </Typography>
+      );
+    }
+  });
+  return filteredSkills;
+}
 
 function MainPage ({ user, year, nextYear }) {
   const classes = useStyles();  
@@ -95,11 +108,9 @@ function MainPage ({ user, year, nextYear }) {
             <NumberFormat value={reduce(user.houses, (sum, h) => sum + h.livingCost, 0)} displayType={'text'} thousandSeparator={true}/>
           </Typography>
           <Typography>
-            Your current skills level:
+            Your current skills: 
           </Typography>
-          <Typography color="secondary">
-            {user.skills}
-          </Typography>
+            {generateSkills(user.skills)}
           <Typography>
             You live in: 
           </Typography>
