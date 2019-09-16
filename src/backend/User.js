@@ -1,7 +1,7 @@
 import { reduce, filter, forEach, isEqual } from 'lodash';
 import React from 'react';
 import { richIncomeMin, richIncomeMax, veryRichIncomeMin, veryRichIncomeMax, extremeRichSeed, poorMaxIncome } from './constants';
-import { child, student, unemployed } from './database';
+import { child, student, unemployed, availableSkills } from './database';
 import LifeStats from './LifeStats';
 import Chance from 'chance';
 import uuidv1 from 'uuid/v1';
@@ -36,22 +36,7 @@ export default class User {
     this.age = 1;
     this.job = child;
     this.children = [];
-    this.skills = {
-      knowledge: 0,
-      logic: 0,
-      languages: 0,
-      driving: 0,
-      sport: 0,
-      programming: 0,
-      management: 0,
-      charisma: 0,
-      biology: 0,
-      teaching: 0,
-      arts: 0,
-      counting: 0,
-      law: 0,
-      science: 0,
-    };
+    this.skills = availableSkills;
     this.house = null;
     this.houses = [];
     this.cars = [];
