@@ -264,3 +264,20 @@ export const LOVE_RELATION = 1;
 export const FRIENDS_RELATION = 2;
 export const FAMILY_RELATION = 3;
 export const MATES_RELATION = 4;
+
+export const availableSkills = {
+  knowledge: 0,
+  logic: 0,
+  languages: 0,
+  driving: 0,
+  sport: 0,
+  programming: 0,
+  management: 0,
+  charisma: 0,
+  biology: 0,
+  teaching: 0,
+  arts: 0,
+  counting: 0,
+  law: 0,
+  science: 0,
+};
