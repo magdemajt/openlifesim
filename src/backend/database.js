@@ -138,7 +138,7 @@ export const jobs = [
   new Job('CFO', 88000, 78, 1, [{ job: 'Management Student', yearsWorking: 1 }]),
   new Job('CEO', 120000, 85, 0, [{ job: 'SVP', yearsWorking: 1 }]),
   // No Degree
-  new Job('Bricklayer', 20000, 10),
+  new Job('Bricklayer', 20000, { knowledge: 10 }),
   new Job('Carpenter', 25000, 12),
   new Job('Driver', 27000, 14),
   new Job('Teacher', 29000, 22, 0),
