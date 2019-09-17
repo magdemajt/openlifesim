@@ -1,5 +1,6 @@
 import { random } from 'lodash';
-import { availableSkills } from './database';
+import { availableSkills } from './constants';
+
 
 export default class Job {
   constructor (name, salary, requirement = availableSkills, skillGrowth = availableSkills, requiredJobs = []) {

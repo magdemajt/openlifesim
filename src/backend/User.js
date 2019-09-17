@@ -1,7 +1,7 @@
 import { reduce, filter, forEach, isEqual } from 'lodash';
 import React from 'react';
-import { richIncomeMin, richIncomeMax, veryRichIncomeMin, veryRichIncomeMax, extremeRichSeed, poorMaxIncome } from './constants';
-import { child, student, unemployed, availableSkills } from './database';
+import { richIncomeMin, richIncomeMax, veryRichIncomeMin, veryRichIncomeMax, extremeRichSeed, poorMaxIncome, availableSkills } from './constants';
+import { child, student, unemployed } from './database';
 import LifeStats from './LifeStats';
 import Chance from 'chance';
 import uuidv1 from 'uuid/v1';

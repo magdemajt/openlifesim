@@ -10,6 +10,7 @@ import Person from '../../backend/Person'
 import { Typography, makeStyles, TextField, Divider, Grid } from '@material-ui/core';
 import NumberFormat from 'react-number-format';
 import JobOffer from '../../backend/JobOffer';
+import { map } from 'lodash';
 
 const useStyles = makeStyles(theme => ({
   dialog: {
@@ -22,6 +23,13 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     width: '100%'
+  },
+  centerize: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   }
 }));
 
@@ -31,6 +39,23 @@ export default function JobDialog({ user, setUser, job = new JobOffer(), setJob,
   function handleClose() {
     setUser(updateUser(user));
     setJob(null);
+  }
+
+  function generateSkillList (title, skills) {
+    return (
+    <React.Fragment>
+      <Typography color="textPrimary" className={classes.centerize}>
+        {title}
+      </Typography>
+      {map(skills, (skill, skillName) => {
+        return (
+          <Typography color="textSecondary" key={skillName} className={classes.centerize}>
+            {`${skillName.charAt(0).toUpperCase() + skillName.substr(1)}: ${skill}`}
+          </Typography>
+        )
+      })}
+    </React.Fragment>
+    );
   }
 
   function handleApply (job, index = 0) {
@@ -46,6 +71,30 @@ export default function JobDialog({ user, setUser, job = new JobOffer(), setJob,
       setPage(0);
     }
   };
+  function generateContent () {
+    return (
+      <React.Fragment>
+        <Typography color="textPrimary">
+          Salary: 
+        </Typography>
+        <Typography color="textSecondary">
+          <NumberFormat displayType="text" value={job.currentSalary} thousandSeparator={true} />
+        </Typography>
+        <Divider variant="fullWidth" />
+        {generateSkillList('Requirements: ', job.requirement)}
+        <Divider variant="fullWidth" />
+        {generateSkillList('Skill growth: ', job.skillGrowth)}
+        <Divider variant="fullWidth"/>
+        <Grid item xs={12}>
+          <Grid container justify="center" alignContent="center">
+            <Button color="secondary" className={classes.button} onClick={() => handleApply(job)}>
+              Apply for Job
+            </Button>
+          </Grid>
+        </Grid>
+      </React.Fragment>
+    )
+  }
 
   return (
       <Dialog
@@ -56,21 +105,7 @@ export default function JobDialog({ user, setUser, job = new JobOffer(), setJob,
       >
         <DialogTitle id="alert-dialog-title">{job !== null ? job.name + ' ' + job.companyName : ''}</DialogTitle>
         <DialogContent className={classes.dialog}>
-          <Typography color="textPrimary">
-            Salary: 
-          </Typography>
-          <Typography color="textSecondary">
-            <NumberFormat displayType="text" value={job !== null ? job.currentSalary : 0} thousandSeparator={true} />
-          </Typography>
-
-          <Divider variant="fullWidth"/>
-          <Grid item xs={12}>
-            <Grid container justify="center" alignContent="center">
-              <Button color="secondary" className={classes.button} onClick={() => handleApply(job)}>
-               Apply for Job
-              </Button>
-            </Grid>
-          </Grid>
+          {job !== null ? generateContent() : null}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
