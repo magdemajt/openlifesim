@@ -1,4 +1,4 @@
-import { reduce, filter, forEach, isEqual } from 'lodash';
+import { reduce, filter, forEach, isEqual, random } from 'lodash';
 import React from 'react';
 import { richIncomeMin, richIncomeMax, veryRichIncomeMin, veryRichIncomeMax, extremeRichSeed, poorMaxIncome, availableSkills } from './constants';
 import { child, student, unemployed } from './database';
@@ -36,7 +36,7 @@ export default class User {
     this.age = 1;
     this.job = child;
     this.children = [];
-    this.skills = availableSkills;
+    this.skills = {...availableSkills, charisma: random(0, 1)}; 
     this.house = null;
     this.houses = [];
     this.cars = [];

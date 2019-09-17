@@ -19,4 +19,5 @@ export const availableSkills = {
   counting: 0,
   law: 0,
   science: 0,
+  coordination: 0,
 };

@@ -74,7 +74,7 @@ export const university = [
     teaching: 3,
     arts: 1
   }),
-  new Job('Driving School', -2000, { knowledge: 10 }, { driving: 1 }),
+  new Job('Driving School', -2000, { knowledge: 10 }, { driving: 1, coordination: 1 }),
   new Job('Software Intern', 10000 , { knowledge: 12 }, { programming: 1, knowledge: 1 }),
 ]
 
@@ -138,13 +138,13 @@ export const jobs = [
   new Job('CFO', 88000, 78, 1, [{ job: 'Management Student', yearsWorking: 1 }]),
   new Job('CEO', 120000, 85, 0, [{ job: 'SVP', yearsWorking: 1 }]),
   // No Degree
-  new Job('Bricklayer', 20000, { knowledge: 10 }),
-  new Job('Carpenter', 25000, 12),
-  new Job('Driver', 27000, 14),
-  new Job('Teacher', 29000, 22, 0),
-  new Job('Gardener', 20000, 10, 0),
-  new Job('Shop Assistant', 20000, 10, 0),
-  new Job('Waiter', 20000, 10, 0),
+  new Job('Bricklayer', 20000, { knowledge: 10 }, {}),
+  new Job('Carpenter', 25000, { knowledge: 12, coordination: 1 }, {}),
+  new Job('Driver', 27000, { knowledge: 12, coordination: 2, driving: 2 }, { driving: 1 }),
+  new Job('Teacher', 29000, { knowledge: 14, teaching: 4 }, { teaching: 1 }),
+  new Job('Gardener', 20000, { knowledge: 10, coordination: 1}, { arts: 1 }),
+  new Job('Shop Assistant', 20000, { knowledge: 10 }, {}),
+  new Job('Waiter', 20000, { knowledge: 10, coordination: 1, charisma: 1 }, { charisma: 1 }),
 ];
 
 export const getEducation = () => {
