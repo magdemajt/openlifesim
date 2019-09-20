@@ -447,13 +447,13 @@ export default class LifeStats {
     }
     if (user.money >= this.selectedFood.price) {
       this.health -= (this.healthDecay + this.selectedFood.healthDecay);
-      user.payMoney(this.selectedFood.price);
+      user.removeMoney(this.selectedFood.price);
     } else {
       this.health -= (this.healthDecay + 30);
     }
     if (user.money >= this.selectedParty.price) {
       this.happiness -= (this.happinessDecay - this.selectedParty.hDecayReduction);
-      user.payMoney(this.selectedParty.price);
+      user.removeMoney(this.selectedParty.price);
     } else {
       this.happiness -= (this.happinessDecay);
       user.money = 0;
