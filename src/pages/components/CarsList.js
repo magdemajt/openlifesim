@@ -87,7 +87,7 @@ export default function CarsList({ user, year, setUser }) {
       setLeft(left.concat(rightChecked));
       setRight(not(right, rightChecked));
       setChecked(not(checked, rightChecked));
-      user.payMoney(toPay);
+      user.removeMoney(toPay);
       setUser(updateUser(user));
     }
   };

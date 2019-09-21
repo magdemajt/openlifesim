@@ -31,6 +31,6 @@ export default class HouseOffer {
     if (this.rented) {
       user.addMoney(this.rentMoney);
     }
-    user.payMoney(this.livingCost);
+    user.removeMoney(this.livingCost);
   }
 }

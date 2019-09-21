@@ -18,6 +18,9 @@ const checkRelationChange = (person) => {
   if (person.relation > 100) {
     person.relation = 100;
   }
+  if (person.relation < 0) {
+    person.relation = 0;
+  }
 }
 
 export const askForMoney = (user = new User(), person = new Person(), amount) => {
@@ -26,8 +29,9 @@ export const askForMoney = (user = new User(), person = new Person(), amount) =>
     const chanceOfGetting = Math.max(100 - percentageOfMoney * percentageOfMoney * coeff, 5);
     if (person.relation > 50 && (person.relationType !== 0 && person.relationType !== MATES_RELATION) && random(0, 100) > 100 - chanceOfGetting && person.money >= amount) {
       user.addMoney(amount)
-      person.payMoney(amount);
+      person.removeMoney(amount);
       person.relation -= random(1, 5);
+      checkRelationChange(person);
       return true;
     }
   }
@@ -37,7 +41,7 @@ export const askForMoney = (user = new User(), person = new Person(), amount) =>
 export const giveMoney = (user = new User(), person = new Person(), amount) => {
   const increaseInRelation = random(0, 8);
   if (amount <= user.money && amount > 0) {
-    user.payMoney(amount);
+    user.removeMoney(amount);
     person.relation += increaseInRelation;
     checkRelationChange(person);
     return true;
@@ -107,7 +111,7 @@ export const assault = (user = new User(), person = new Person()) => {
 export const doRomanticStuff = (user = new User(), person = new User()) => {
   person.relation += 10;
   user.lifeStats.happiness += 2;
-  user.payMoney(random(500, 1000));
+  user.removeMoney(random(500, 1000));
   checkRelationChange(person);
 }
 

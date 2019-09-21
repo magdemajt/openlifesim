@@ -1,4 +1,4 @@
-import { reduce, filter, forEach, isEqual } from 'lodash';
+import { reduce, filter, forEach, isEqual, random } from 'lodash';
 import React from 'react';
 import { richIncomeMin, richIncomeMax, veryRichIncomeMin, veryRichIncomeMax, extremeRichSeed, poorMaxIncome, availableSkills } from './constants';
 import { child, student, unemployed } from './database';
@@ -36,17 +36,22 @@ export default class User {
     this.age = 1;
     this.job = child;
     this.children = [];
-    this.skills = availableSkills;
+    this.skills = {...availableSkills, charisma: random(0, 1)}; 
     this.house = null;
     this.houses = [];
     this.cars = [];
     this.pastJobs = [];
     this.lifeStats = new LifeStats();
     this.livingWithParents = true;
+    this.endgameStats = {
+      totalEarnedMoney: 0,
+      totalSpentMoney = 0,
+      
+    }
   }
   static update (oldUser) {
     const user = new User(oldUser.uuid);
-    for (let x in oldUser) {
+    for (let x in oldUser) {nactionality
       if (typeof user[x] !== 'function') {
         user[x] = oldUser[x];
       }
@@ -76,8 +81,8 @@ export default class User {
     return this.lifeStats.changeSelectedParty(newParty, this);
   }
   generateNames = () => {
-    this.name = chance.first({ gender: this.gender === 1 ? "male" : "female", nactionality: 'en' });
-    this.surename = chance.last({ nactionality: 'en' });
+    this.name = chance.first({ gender: this.gender === 1 ? "male" : "female", nationality: 'us' });
+    this.surename = chance.last({ nationality: 'us' });
   }
   setGender = (gender) => {
     this.gender = gender;
@@ -85,6 +90,7 @@ export default class User {
   
   addMoney = (money) => {
     this.money += money;
+    this.endgameStats.totalEarnedMoney += money;
   }
   addSkill = (skills) => {
     if (typeof skills === 'number') {
@@ -147,7 +153,8 @@ export default class User {
       }
     }
   }
-  payMoney = (toPay) => {
+  removeMoney = (toPay) => {
     this.money -= toPay;
+    this.endgameStats.totalSpentMoney += toPay;
   }
 }

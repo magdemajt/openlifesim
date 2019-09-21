@@ -137,7 +137,7 @@ export default function HouseList({ user, houses, setUser }) {
       setLeft(left.concat(rightChecked));
       setRight(not(right, rightChecked));
       setChecked(not(checked, rightChecked));
-      user.payMoney(toPay);
+      user.removeMoney(toPay);
       setUser(updateUser(user));
     }
   };

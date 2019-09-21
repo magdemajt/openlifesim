@@ -25,7 +25,7 @@ export default class Person extends User {
   nextYearPerson = (setInfo, setColor, year, triggerSiblingsUpdate = true, triggerChildrenUpdate = false) => {
     if (!this.deceased) {
       this.nextYear(setInfo, setColor, year, false, triggerSiblingsUpdate, triggerChildrenUpdate);
-      this.payMoney(Math.round(map_range(this.income() - reduce(this.houses, (sum, h) => sum + h.livingCost, 0), 0, 120000, 0, 45000)));
+      this.removeMoney(Math.round(map_range(this.income() - reduce(this.houses, (sum, h) => sum + h.livingCost, 0), 0, 120000, 0, 45000)));
       if (this.age === this.deathAge) {
         this.deceased = true;
         if (this.children.length > 0) {

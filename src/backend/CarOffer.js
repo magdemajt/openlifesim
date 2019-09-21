@@ -24,12 +24,12 @@ export default class CarOffer {
   }
 
   nextYear = (user, setInfo, setColor, year) => {
-    user.payMoney(this.cost)
+    user.removeMoney(this.cost)
     // if (this.condition <= 0) {
     //   setColor("warning");
     //   setInfo(`Car ${this.name} is broken, you had to pay: ${Math.round(this.cost * 3)}`);
     //   this.condition += 20;
-    //   user.payMoney(Math.round(this.cost * 3));
+    //   user.removeMoney(Math.round(this.cost * 3));
     // }
     this.generateMillageAndPriceAndCost(year);
   }
