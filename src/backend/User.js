@@ -45,13 +45,13 @@ export default class User {
     this.livingWithParents = true;
     this.endgameStats = {
       totalEarnedMoney: 0,
-      totalSpentMoney = 0,
+      totalSpentMoney: 0,
       
     }
   }
   static update (oldUser) {
     const user = new User(oldUser.uuid);
-    for (let x in oldUser) {nactionality
+    for (let x in oldUser) {nationality
       if (typeof user[x] !== 'function') {
         user[x] = oldUser[x];
       }
