@@ -158,11 +158,11 @@ export const nonJobWork = [
   'Unemployed', 'Retired', 'Child'
 ];
 
-export const generateJobs = (user, reqOffset = 10) => {
+export const generateJobs = (user, reqOffset = 1) => {
   const filteredJ = filter(jobs, job => {
     let meetsReq = true;
     forEach(job.requirement, (req, reqName) => {
-      if (user.skills[reqName] < req) {
+      if (user.skills[reqName] + reqOffset < req) {
         meetsReq = false;
       }
     })
