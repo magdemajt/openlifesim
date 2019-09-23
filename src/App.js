@@ -79,9 +79,9 @@ function App() {
     if (page === RELATIONS_PAGE) {
       return <RelationsPage user={user} year={year} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />
     }
-    if (page === CARRERS_PAGE) {
+    /*if (page === CARRERS_PAGE) {
       return <RelationsPage user={user} year={year} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />
-    }
+    }*/
   };
 
   return (
