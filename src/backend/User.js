@@ -45,13 +45,13 @@ export default class User {
     this.livingWithParents = true;
     this.endgameStats = {
       totalEarnedMoney: 0,
-      totalSpentMoney = 0,
+      totalSpentMoney: 0,
       
     }
   }
   static update (oldUser) {
     const user = new User(oldUser.uuid);
-    for (let x in oldUser) {nactionality
+    for (let x in oldUser) {
       if (typeof user[x] !== 'function') {
         user[x] = oldUser[x];
       }
@@ -81,8 +81,8 @@ export default class User {
     return this.lifeStats.changeSelectedParty(newParty, this);
   }
   generateNames = () => {
-    this.name = chance.first({ gender: this.gender === 1 ? "male" : "female", nationality: 'us' });
-    this.surename = chance.last({ nationality: 'us' });
+    this.name = chance.first({ gender: this.gender === 1 ? "male" : "female" });
+    this.surename = chance.last({});
   }
   setGender = (gender) => {
     this.gender = gender;
