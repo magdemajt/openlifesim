@@ -2,7 +2,7 @@ import House from "./House";
 import Car from "./Car";
 import Job from "./Job";
 import JobOffer from "./JobOffer";
-import { random, filter, sample } from 'lodash';
+import { random, filter, sample, forEach } from 'lodash';
 import HouseOffer from "./HouseOffer";
 import CarOffer from "./CarOffer";
 
@@ -159,7 +159,15 @@ export const nonJobWork = [
 ];
 
 export const generateJobs = (user, reqOffset = 10) => {
-  const filteredJ = filter(jobs, job => (job.requirement <= user.skills + reqOffset));
+  const filteredJ = filter(jobs, job => {
+    let meetsReq = true;
+    forEach(job.requirement, (req, reqName) => {
+      if (user.skills[reqName] < req) {
+        meetsReq = false;
+      }
+    })
+    return meetsReq;
+  });
   const jobList = [];
   for(let i = 0; i < filteredJ.length * 2; i += 1){
     jobList.push(new JobOffer(sample(filteredJ)));
