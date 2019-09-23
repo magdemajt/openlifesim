@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Avatar } from '@material-ui/core';
+import { gameVersion } from './backend/constants';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,7 +41,7 @@ export default function StartBar() {
         <Toolbar className={classes.flex}>
           <Avatar className={classes.bigAvatar} src="/logo.png" />
           <Typography className={classes.floatCenter} variant="h6" color="inherit">
-            Open Life Sim v.0.1
+            Open Life Sim v.{gameVersion}
           </Typography>
           <Avatar className={classes.bigAvatarInvisible} />
         </Toolbar>
