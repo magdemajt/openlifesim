@@ -49,9 +49,9 @@ export default function SimpleBottomNavigation({setPage, page, user}) {
         {user !== undefined && user.age >= 16 ? (
           <BottomNavigationAction label="Jobs" value={1} icon={<JobIcon />}/>
         ) : null}
-        {user !== undefined && user.age >= 16 ? (
+        {/* {user !== undefined && user.age >= 16 ? (
           <BottomNavigationAction label="Careers" value={6} icon={<JobIcon />}/>
-        ) : null}
+        ) : null} */}
         {user !== undefined && user.age >= 16 ? (
           <BottomNavigationAction label="Houses" value={2} icon={<HouseIcon />} />
         ) : null}
