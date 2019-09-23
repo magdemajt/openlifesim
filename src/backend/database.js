@@ -51,7 +51,7 @@ export const university = [
   new Job('Accounting Student', -5000, { knowledge: 14 }, { knowledge: 1, logic: 1, counting: 1 }),
   new Job('Art Student', -5000, { knowledge: 10 }, { arts: 1 }),
   new Job('Maths Student', -5000, { knowledge: 16, logic: 6 }, { knowledge: 1, logic: 2 }),
-  new Job('Computer Science Student', -5000, { knowledge: 14, logic: 2 }, { knowledge: 1, logic: 1, programming: 1 }),
+  new Job('Computer Science Student', -5000, { knowledge: 14, logic: 2 }, { knowledge: 1, logic: 1, programming: 2 /* <-- zwiększone o 1*/ }),
   new Job('Part-time Working Student', 10000, { knowledge: 10 }, {
     knowledge: 1,
     logic: 1,
@@ -79,49 +79,559 @@ export const university = [
 ]
 
 export const education = [
-  new Job('Intern Data Scientist', 10000, { knowledge: 12, logic: 2 }, { logic: 1, counting: 1, knowledge: 1 }),
-  new Job('Sportsman', 0, { knowledge: 10 }, { charisma: 1, sport: 2 }),
-  new Job('Painter', 5500, { knowledge: 10, arts: 2 }, { arts: 2, charisma: 1 }),
+  new Job('Intern Data Scientist', 10000, 
+    { 
+      knowledge: 12, 
+      logic: 2 
+    }, 
+    { 
+      logic: 1, 
+      counting: 1, 
+      knowledge: 1 
+    }
+  ),
+  new Job('Sportsman', 0, 
+    { 
+      knowledge: 10 
+    }, 
+    { 
+      charisma: 1, 
+      sport: 2 
+    }
+  ),
+  new Job('Painter', 5500, 
+    { 
+      knowledge: 10, 
+      arts: 2 
+    }, 
+    { 
+      arts: 2, 
+      charisma: 1 
+    }
+    ),
 ]
 
 export const jobs = [
-  new Job('Genius', 100000000, { knowledge: 100, logic: 90 }, {}),
-  new Job('Junior Software Developer', 20000, { programming: 3 }, { knowledge: 1, programming: 1, logic: 1 }),
-  new Job('Software Developer', 45000, 41, 1, [{ job: 'Junior Software Developer', yearsWorking: 1 }]),
-  new Job('Senior Software Developer', 58000, 46, 0, [{ job: 'Software Developer', yearsWorking: 1 }]),
-  new Job('Corpo Software Developer', 53000, 46, 1, [{ job: 'Software Developer', yearsWorking: 1 }]),
-  new Job('Corpo Senior Software Developer', 66000, 51, 0, [{ job: 'Corpo Software Developer', yearsWorking: 1 }]),
+  new Job('Genius', 100000000, 
+    { 
+      knowledge: 100, 
+      logic: 90 
+    }, 
+    {}
+  ),
+  new Job('Junior Software Developer', 20000, 
+    { 
+      programming: 3, 
+      knowledge: 15 
+    }, 
+    { 
+      knowledge: 1, 
+      programming: 1, 
+      logic: 1 
+    }
+  ),
+  new Job('Software Developer', 45000, 
+    { 
+      programming: 6, 
+      knowledge: 18, 
+      logic: 2 
+    }, 
+    { 
+      knowledge: 1, 
+      programming: 2, 
+      logic: 2 
+    }, 
+    [{ 
+      job: 'Junior Software Developer', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Senior Software Developer', 58000, 
+    { 
+      programming: 15, 
+      knowledge: 22, 
+      logic: 6 
+    }, 
+    { 
+      knowledge: 2, 
+      programming: 3, 
+      logic: 3 
+    }, 
+    [{ 
+      job: 'Software Developer', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Corpo Software Developer', 53000, 
+    { 
+      programming: 10, 
+      knowledge: 20, 
+      logic: 4, 
+      management: 1 
+    }, 
+    { 
+      knowledge: 2, 
+      programming: 2, 
+      logic: 2 
+    }, 
+    [{ 
+      job: 'Software Developer', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Corpo Senior Software Developer', 66000, 
+    { 
+      programming: 24, 
+      knowledge: 25, 
+      logic: 8, 
+      management: 2 
+    }, 
+    { 
+      knowledge: 3, 
+      programming: 5, 
+      logic: 3 
+    }, 
+    [{ 
+      job: 'Corpo Software Developer', 
+      yearsWorking: 1 
+    }]
+  ),
   //Physics
-  new Job('Experimental Physicist', 36000, 38, 1, [{ job: 'Physics Student', yearsWorking: 1 }]),
-  new Job('Theoretical Physicist', 45000, 44, 1, [{ job: 'Physics Student', yearsWorking: 1 }]),
-  new Job('Prize-winning Physicist', 60000, 50, 1, [{ job: 'Physics Student', yearsWorking: 1 }]),
+  new Job('Experimental Physicist', 36000, 
+    { 
+      knowledge: 22, 
+      logic: 4, 
+      science: 4, 
+      counting: 1,
+      programming: 1
+    }, 
+    { 
+      knowledge: 2, 
+      logic: 1, 
+      science: 1,
+      programming: 1
+    }, 
+    [{ 
+      job: 'Physics Student', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Theoretical Physicist', 45000, 
+    { 
+      knowledge: 27, 
+      logic: 7, 
+      science: 7, 
+      counting: 1 ,
+      programming: 3
+    }, 
+    { 
+      knowledge: 2, 
+      logic: 2, 
+      logic: 2 ,
+      programming: 2
+    }, 
+    [{ 
+      job: 'Physics Student', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Prize-winning Physicist', 60000, 
+    { 
+      knowledge: 35, 
+      logic: 12, 
+      science: 12, 
+      counting: 2,
+      programming: 6
+    }, 
+    { 
+      knowledge: 3, 
+      logic: 4, 
+      science: 4,
+      programming: 4
+    }, 
+    [{ 
+      job: 'Physics Student', 
+      yearsWorking: 1 
+    }]
+  ),
   //Maths and Data Science
-  new Job('Junior Data Scientist', 18500, 32, 3),
-  new Job('Data Scientist', 30000, 41, 1, [{ job: 'Junior Data Scientist', yearsWorking: 1 }]),
-  new Job('Senior Data Scientist', 60000, 46, 0, [{ job: 'Data Scientist', yearsWorking: 1 }]),
-  new Job('Mathematician', 28000, 38, 2, [{ job: 'Maths Student', yearsWorking: 1 }]),
-  new Job('Millenial Problem Solving Mathematician', 100000, 80, 0, [{ job: 'Mathematician', yearsWorking: 1 }]),
+  new Job('Junior Data Scientist', 18500, 
+    { 
+      knowledge: 14, 
+      logic: 4, 
+      counting: 2, 
+      programming: 1 
+    }, 
+    {
+      knowledge: 1,
+      logic: 1,
+      counting: 2,
+    }
+  ),
+  new Job('Data Scientist', 30000, 
+    {
+      knowledge: 18,
+      logic: 6,
+      counting: 6,
+      programming: 1
+    }, 
+    {
+      knowledge: 1,
+      logic: 2,
+      counting: 3
+    }, 
+    [{ 
+      job: 'Junior Data Scientist', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Senior Data Scientist', 60000, 
+    {
+      knowledge: 22,
+      logic: 8,
+      counting: 12,
+      programming: 2
+    }, 
+    {
+      knowledge: 2,
+      logic: 3,
+      counting: 5
+    }, 
+    [{ 
+      job: 'Data Scientist', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Mathematician', 28000, 
+    {
+      knowledge: 18,
+      logic:  8,
+      counting: 1,
+      programming: 1
+    }, 
+    {
+      knowledge: 2,
+      logic: 3,
+      counting: 1,
+      programming: 1
+    }, 
+    [{ 
+      job: 'Maths Student', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Millenial Problem Solving Mathematician', 100000, 
+    {
+      knowledge: 30,
+      logic: 12,
+      counting: 1,
+      programming: 5 
+    }, 
+    {
+      knowledge: 2,
+      logic: 5,
+      counting: 1,
+      programming: 3
+    }, 
+    [{ 
+      job: 'Mathematician', 
+      yearsWorking: 1 
+    }]
+  ),
   //Psychology
-  new Job('Sales Manager', 27000, 32, 2, [{ job: 'Psychology Student', yearsWorking: 1 }]),
-  new Job('Sales Director', 54000, 42, 2, [{ job: 'Sales Manager', yearsWorking: 1 }]),
-  new Job('Sales VP', 78000, 62, 0, [{ job: 'Sales Director', yearsWorking: 1 }]),
-  new Job('Psychiatrist Intern', 20000, 32, 4, [{ job: 'Psychology Student', yearsWorking: 1 }]),
-  new Job('Psychologist Intern', 15000, 32, 4, [{ job: 'Psychology Student', yearsWorking: 1 }]),
-  new Job('Psychiatrist', 60000, 44, 1, [{ job: 'Psychiatrist Intern', yearsWorking: 1 }]),
-  new Job('Psychologist', 50000, 40, 1, [{ job: 'Psychologist Intern', yearsWorking: 1 }]),
+  new Job('Sales Manager', 27000, 
+    {
+      knowledge: 16,
+      charisma: 2,
+      management: 1,
+      biology: 1,
+      languages: 1
+    }, 
+    {
+      knowledge: 1,
+      charisma: 2,
+      management: 2
+    }, 
+    [{ 
+      job: 'Psychology Student',    //Ja bym to zmienił 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Sales Director', 54000, 
+    {
+      knowledge: 20,
+      charisma: 6,
+      management: 8,
+      biology: 1 ,
+      languages: 2
+    }, 
+    {
+      knowledge: 2,
+      charisma: 2,
+      management: 3,
+      logic: 1
+    }, [{ job: 'Sales Manager', yearsWorking: 1 }]),
+  new Job('Sales VP', 78000, 
+    {
+      knowledge: 24,
+      charisma: 12,
+      management: 18,
+      biology: 1,
+      logic: 2,
+      counting: 1,
+      languages: 3
+    }, 
+    {
+      knowledge: 3,
+      charisma: 4,
+      management: 4,
+      logic: 2,
+      counting: 1,
+      languages: 1
+    }, 
+    [{ 
+      job: 'Sales Director', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Psychiatrist Intern', 20000, 
+    {
+      knowledge: 18,
+      charisma: 1,
+      biology: 3
+    }, 
+    {
+      knowledge: 2,
+      charisma: 1,
+      biology: 3
+    }, 
+    [{ 
+      job: 'Psychology Student', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Psychologist Intern', 15000, 
+    {
+      knowledge: 18,
+      charisma: 2,
+      biology: 1
+    }, 
+    {
+      knowledge: 2,
+      charisma: 2,
+      biology: 1
+    }, 
+    [{ 
+      job: 'Psychology Student', 
+      yearsWorking: 1 
+    }]),
+  new Job('Psychiatrist', 60000, 
+    {
+      knowledge: 22,
+      charisma: 1,
+      biology: 9,
+    }, 
+    {
+      knowledge: 3,
+      charisma: 1,
+      biology: 5
+    }, 
+    [{ 
+      job: 'Psychiatrist Intern', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Psychologist', 50000, 
+    {
+      knowledge: 22,
+      charisma: 6,
+      biology: 3,
+      languages: 1
+    }, 
+    {
+      knowledge: 4,
+      charisma: 4,
+      biology: 1
+    }, 
+    [{ 
+      job: 'Psychologist Intern', 
+      yearsWorking: 1 
+    }]
+  ),
   // Accounting
-  new Job('Intern Accountant', 23000, 37, 2, [{ job: 'Accounting Student', yearsWorking: 1 }]),
-  new Job('Accountant', 23000, 41, 1, [{ job: 'Intern Accountant', yearsWorking: 1 }]),
-  new Job('Main Accountant', 48000, 46, 0, [{ job: 'Accountant', yearsWorking: 1 }]),
+  new Job('Intern Accountant', 20000, // <-- zmniejszone o 300
+    {
+      knowledge: 16,
+      logic: 3,
+      counting: 2
+    }, 
+    {
+      knowledge: 1,
+      logic: 1,
+      counting: 2
+    }, 
+    [{ 
+      job: 'Accounting Student', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Accountant', 23000, 
+    {
+      knowledge: 17,
+      logic: 4,
+      counting: 4
+    }, 
+    {
+      knowledge: 1,
+      logic: 2,
+      counting: 4
+    }, 
+    [{ 
+      job: 'Intern Accountant', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Main Accountant', 48000, 
+    {
+      knowledge: 20,
+      logic: 8,
+      counting: 12
+    }, 
+    {
+      knowledge: 2,
+      logic: 3,
+      counting: 5
+    }, 
+    [{ 
+      job: 'Accountant', 
+      yearsWorking: 1 
+    }]
+  ),
   // Law
-  new Job('Lawyer', 30000, 41, 1, [{ job: 'Law Student', yearsWorking: 1 }]),
-  new Job('Judge', 46000, 51, 1, [{ job: 'Law Student', yearsWorking: 1 }]),
-  new Job('Good Lawyer', 90000, 66, 0, [{ job: 'Law Student', yearsWorking: 1 }]),
-  new Job('Legal Counsel', 37000, 46, 0, [{ job: 'Law Student', yearsWorking: 1 }]),
+  new Job('Lawyer', 30000, 
+    {
+      knowledge: 20,
+      law: 4,
+      charisma: 2
+    }, 
+    {
+      knowledge: 2,
+      law: 2,
+      charisma: 1
+    }, 
+    [{ 
+      job: 'Law Student', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Judge', 46000, 
+    {
+      knowledge: 30,
+      law: 15,
+      charisma: 5
+    }, 
+    {
+      knowledge: 3,
+      law: 3,
+      charisma: 1
+    }, 
+    [{ 
+      job: 'Law Student', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Good Lawyer', 90000, 
+    {
+      knowledge: 26,
+      law: 15,
+      charisma: 10
+    }, 
+    {
+      knowledge: 2,
+      law: 3,
+      charisma: 3
+    }, 
+    [{ 
+      job: 'Law Student', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Legal Counsel', 37000, 
+    {
+      knowledge: 24,
+      law: 10,
+      charisma: 4
+    }, 
+    {
+      knowledge: 2,
+      law: 3,
+      charisma: 2
+    }, 
+    [{ 
+      job: 'Law Student', 
+      yearsWorking: 1 
+    }]
+  ),
   // Chemistry
-  new Job('Chemist', 43000, 38, 1, [{ job: 'Chemistry Student', yearsWorking: 1 }]),
-  new Job('Prize-winning Chemist', 60000, 50, 0, [{ job: 'Chemist', yearsWorking: 1 }]),
-  new Job('Pharmacologist', 85000, 68, 0, [{ job: 'Chemistry Student', yearsWorking: 1 }]),
+  new Job('Chemist', 43000, 
+    {
+      knowledge: 18,
+      logic: 3,
+      science: 4,
+      coordination: 1
+    }, 
+    {
+      knowledge: 2,
+      logic: 1,
+      science: 2,
+      coordination: 1
+    }, 
+    [{ 
+      job: 'Chemistry Student', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Prize-winning Chemist', 60000, 
+    {
+      knowledge: 28,
+      logic: 8,
+      science: 15,
+      coordination: 5
+    }, 
+    {
+      knowledge: 4,
+      logic: 2,
+      science: 4,
+      coordination: 2
+    }, 
+    [{ 
+      job: 'Chemist', 
+      yearsWorking: 1 
+    }]
+  ),
+  new Job('Pharmacologist', 85000, 
+    {
+      knowledge: 32,
+      logic: 14,
+      science: 12,
+      coordination: 2,
+      counting: 1,
+      management: 2,
+      languages: 1
+    }, 
+    {
+      knowledge: 2,
+      logic: 3,
+      science: 3,
+      coordination: 1,
+      counting: 1,
+      management: 1
+    }, 
+    [{ 
+      job: 'Chemistry Student', 
+      yearsWorking: 1 
+    }]
+  ),
   // Medicine
   new Job('Intern Doctor', 25000, 56, 4, [{ job: 'Medicine Student', yearsWorking: 1 }]),
   new Job('Nurse', 33000, 38, 0, [{ job: 'Medicine Student', yearsWorking: 1 }]),
