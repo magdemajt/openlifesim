@@ -1,9 +1,10 @@
-import { random, sample, filter, reduce, sortBy, forEach, chunk } from 'lodash';
+import { random, sample, filter, reduce, sortBy, forEach, chunk, shuffle } from 'lodash';
 import { birthMateOffset, skillMateOffset, jobs, houses, cars, student, unemployed, child, generateJobs, getEducation, MATES_RELATION, FAMILY_RELATION, retired } from './database';
 import User from './User';
 import HouseOffer from './HouseOffer';
 import JobOffer from './JobOffer';
 import CarOffer from './CarOffer';
+import { availableSkills } from './constants';
 
 function map_range(value, low1, high1, low2, high2) {
   const realValue = value > high1 ? high2 : value;
@@ -22,6 +23,20 @@ export default class Person extends User {
     this.generateNames();
     
   }
+
+  randomizeSkills = () => {
+    let randomSkillPoints = Math.ceil((this.age - 6) * 1.5);
+    const randomizedSkills = shuffle(Object.keys(availableSkills));
+    forEach(randomizedSkills, (skillName) => {
+      let toAdd = random(0, 15);
+      if (randomSkillPoints < 15) {
+        toAdd = random(0, randomSkillPoints)
+      }
+      this.skills[skillName] += toAdd;
+      randomSkillPoints -= toAdd;
+    });
+  };
+
   nextYearPerson = (setInfo, setColor, year, triggerSiblingsUpdate = true, triggerChildrenUpdate = false) => {
     if (!this.deceased) {
       this.nextYear(setInfo, setColor, year, false, triggerSiblingsUpdate, triggerChildrenUpdate);
@@ -113,7 +128,7 @@ export default class Person extends User {
   static generateWorkMate (user) {
     const generated = new Person();
     generated.age = random(user.age - birthMateOffset, user.age + birthMateOffset);
-    generated.skills = random(user.skills - skillMateOffset, user.skills + skillMateOffset);
+    generated.randomizeSkills();
     generated.job = new JobOffer(sample(filter(jobs, job => job.requirement <= user.skills)), user.job.companyName);
     generated.addMoney(generated.job.currentSalary * random(3, 7));
     generated.randomizeHouses();
@@ -124,7 +139,7 @@ export default class Person extends User {
   static generateJobMate (user) {
     const generated = new Person();
     generated.age = random(user.age, user.age + birthMateOffset);
-    generated.skills = random(user.skills, user.skills + skillMateOffset);
+    generated.randomizeSkills();
     generated.job = new JobOffer(user.job.job, user.job.companyName);
     generated.addMoney(generated.job.currentSalary * random(3, 7));
     generated.randomizeHouses();
@@ -186,14 +201,14 @@ export default class Person extends User {
     generatedFather.age = random(16, 55);
     generatedMother.age = random(16, 50);
     
+    generatedFather.randomizeSkills();
+    generatedMother.randomizeSkills();
     if (generatedFather.lifeStats.geniusTrait) {
-      generatedFather.skills += generatedFather.age;
+      generatedFather.addSkill(5);
     }
     if (generatedMother.lifeStats.geniusTrait) {
-      generatedMother.skills += generatedMother.age;
+      generatedMother.addSkill(5);
     }
-    generatedFather.skills += random(10, generatedFather.age - 6);
-    generatedMother.skills += random(10, generatedMother.age - 6);
     
     const motherJobs = sortBy(generateJobs(generatedMother, 0), 'currentSalary');
     const fatherJobs = sortBy(generateJobs(generatedFather, 0), 'currentSalary');
