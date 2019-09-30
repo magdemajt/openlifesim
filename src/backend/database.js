@@ -140,11 +140,7 @@ export const jobs = [
       knowledge: 1, 
       programming: 2, 
       logic: 2 
-    }, 
-    [{ 
-      job: 'Junior Software Developer', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Senior Software Developer', 58000, 
     { 
@@ -156,11 +152,7 @@ export const jobs = [
       knowledge: 2, 
       programming: 3, 
       logic: 3 
-    }, 
-    [{ 
-      job: 'Software Developer', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Corpo Software Developer', 53000, 
     { 
@@ -173,11 +165,7 @@ export const jobs = [
       knowledge: 2, 
       programming: 2, 
       logic: 2 
-    }, 
-    [{ 
-      job: 'Software Developer', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Corpo Senior Software Developer', 66000, 
     { 
@@ -190,11 +178,7 @@ export const jobs = [
       knowledge: 3, 
       programming: 5, 
       logic: 3 
-    }, 
-    [{ 
-      job: 'Corpo Software Developer', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   //Physics
   new Job('Experimental Physicist', 36000, 
@@ -210,11 +194,7 @@ export const jobs = [
       logic: 1, 
       science: 1,
       programming: 1
-    }, 
-    [{ 
-      job: 'Physics Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Theoretical Physicist', 45000, 
     { 
@@ -229,11 +209,7 @@ export const jobs = [
       logic: 2, 
       logic: 2 ,
       programming: 2
-    }, 
-    [{ 
-      job: 'Physics Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Prize-winning Physicist', 60000, 
     { 
@@ -248,11 +224,7 @@ export const jobs = [
       logic: 4, 
       science: 4,
       programming: 4
-    }, 
-    [{ 
-      job: 'Physics Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   //Maths and Data Science
   new Job('Junior Data Scientist', 18500, 
@@ -279,11 +251,7 @@ export const jobs = [
       knowledge: 1,
       logic: 2,
       counting: 3
-    }, 
-    [{ 
-      job: 'Junior Data Scientist', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Senior Data Scientist', 60000, 
     {
@@ -296,11 +264,7 @@ export const jobs = [
       knowledge: 2,
       logic: 3,
       counting: 5
-    }, 
-    [{ 
-      job: 'Data Scientist', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Mathematician', 28000, 
     {
@@ -314,11 +278,7 @@ export const jobs = [
       logic: 3,
       counting: 1,
       programming: 1
-    }, 
-    [{ 
-      job: 'Maths Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Millenial Problem Solving Mathematician', 100000, 
     {
@@ -332,11 +292,7 @@ export const jobs = [
       logic: 5,
       counting: 1,
       programming: 3
-    }, 
-    [{ 
-      job: 'Mathematician', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   //Psychology
   new Job('Sales Manager', 27000, 
@@ -351,11 +307,7 @@ export const jobs = [
       knowledge: 1,
       charisma: 2,
       management: 2
-    }, 
-    [{ 
-      job: 'Psychology Student',    //Ja bym to zmienił 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Sales Director', 54000, 
     {
@@ -370,7 +322,8 @@ export const jobs = [
       charisma: 2,
       management: 3,
       logic: 1
-    }, [{ job: 'Sales Manager', yearsWorking: 1 }]),
+    }
+  ),
   new Job('Sales VP', 78000, 
     {
       knowledge: 24,
@@ -388,11 +341,7 @@ export const jobs = [
       logic: 2,
       counting: 1,
       languages: 1
-    }, 
-    [{ 
-      job: 'Sales Director', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Psychiatrist Intern', 20000, 
     {
@@ -404,11 +353,7 @@ export const jobs = [
       knowledge: 2,
       charisma: 1,
       biology: 3
-    }, 
-    [{ 
-      job: 'Psychology Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Psychologist Intern', 15000, 
     {
@@ -420,11 +365,8 @@ export const jobs = [
       knowledge: 2,
       charisma: 2,
       biology: 1
-    }, 
-    [{ 
-      job: 'Psychology Student', 
-      yearsWorking: 1 
-    }]),
+    }
+  ),
   new Job('Psychiatrist', 60000, 
     {
       knowledge: 22,
@@ -435,11 +377,7 @@ export const jobs = [
       knowledge: 3,
       charisma: 1,
       biology: 5
-    }, 
-    [{ 
-      job: 'Psychiatrist Intern', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Psychologist', 50000, 
     {
@@ -452,11 +390,7 @@ export const jobs = [
       knowledge: 4,
       charisma: 4,
       biology: 1
-    }, 
-    [{ 
-      job: 'Psychologist Intern', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   // Accounting
   new Job('Intern Accountant', 20000, // <-- zmniejszone o 300
@@ -469,11 +403,7 @@ export const jobs = [
       knowledge: 1,
       logic: 1,
       counting: 2
-    }, 
-    [{ 
-      job: 'Accounting Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Accountant', 23000, 
     {
@@ -485,11 +415,7 @@ export const jobs = [
       knowledge: 1,
       logic: 2,
       counting: 4
-    }, 
-    [{ 
-      job: 'Intern Accountant', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Main Accountant', 48000, 
     {
@@ -501,11 +427,7 @@ export const jobs = [
       knowledge: 2,
       logic: 3,
       counting: 5
-    }, 
-    [{ 
-      job: 'Accountant', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   // Law
   new Job('Lawyer', 30000, 
@@ -518,11 +440,7 @@ export const jobs = [
       knowledge: 2,
       law: 2,
       charisma: 1
-    }, 
-    [{ 
-      job: 'Law Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Judge', 46000, 
     {
@@ -534,11 +452,7 @@ export const jobs = [
       knowledge: 3,
       law: 3,
       charisma: 1
-    }, 
-    [{ 
-      job: 'Law Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Good Lawyer', 90000, 
     {
@@ -550,11 +464,7 @@ export const jobs = [
       knowledge: 2,
       law: 3,
       charisma: 3
-    }, 
-    [{ 
-      job: 'Law Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Legal Counsel', 37000, 
     {
@@ -566,11 +476,7 @@ export const jobs = [
       knowledge: 2,
       law: 3,
       charisma: 2
-    }, 
-    [{ 
-      job: 'Law Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   // Chemistry
   new Job('Chemist', 43000, 
@@ -585,11 +491,7 @@ export const jobs = [
       logic: 1,
       science: 2,
       coordination: 1
-    }, 
-    [{ 
-      job: 'Chemistry Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Prize-winning Chemist', 60000, 
     {
@@ -603,11 +505,7 @@ export const jobs = [
       logic: 2,
       science: 4,
       coordination: 2
-    }, 
-    [{ 
-      job: 'Chemist', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   new Job('Pharmacologist', 85000, 
     {
@@ -626,27 +524,185 @@ export const jobs = [
       coordination: 1,
       counting: 1,
       management: 1
-    }, 
-    [{ 
-      job: 'Chemistry Student', 
-      yearsWorking: 1 
-    }]
+    }
   ),
   // Medicine
-  new Job('Intern Doctor', 25000, 56, 4, [{ job: 'Medicine Student', yearsWorking: 1 }]),
-  new Job('Nurse', 33000, 38, 0, [{ job: 'Medicine Student', yearsWorking: 1 }]),
-  new Job('Doctor', 70000, 64, 0, [{ job: 'Intern Doctor', yearsWorking: 1 }]),
+  new Job('Intern Doctor', 25000, 
+    {
+      knowledge: 20,
+      biology: 4,
+      science: 4, 
+      coordination: 1
+    }, 
+    {
+      knowledge: 2, 
+      biology: 1, 
+      science: 1, 
+      coordination: 1
+    },
+  ),
+  new Job('Nurse', 33000, 
+    {
+      knowledge: 22, 
+      biology: 6, 
+      science: 6, 
+      coordination: 2
+    }, 
+    {
+      knowledge: 2, 
+      biology: 2, 
+      science: 2, 
+      coordination: 1
+    },
+  ),
+  new Job('Doctor', 70000, 
+    {
+      knowledge: 26, 
+      biology: 10, 
+      science: 10, 
+      coordination: 2, 
+      languages: 1
+    }, 
+    {
+      knowledge: 4, 
+      biology: 4, 
+      science: 3, 
+      coordination: 2 
+    },
+  ),
   // Art
-  new Job('Actor', 35000, 37, 2, [{ job: 'Art Student', yearsWorking: 1 }]),
-  new Job('Great Actor', 68000, 57, 0, [{ job: 'Actor', yearsWorking: 1 }]),
-  new Job('Artist', 28000, 27, 1, [{ job: 'Art Student', yearsWorking: 1 }]),
+  new Job('Actor', 35000, 
+    {
+      knowledge: 12, 
+      arts: 4, 
+      charisma: 1, 
+      languages: 1
+    }, 
+    {
+      knowledge: 1, 
+      arts: 3, 
+      charisma: 1
+    },
+  ),
+  new Job('Great Actor', 68000, 
+    {
+      knowledge: 15, 
+      arts: 10, 
+      charisma: 3, 
+      languages: 1
+    }, 
+    {
+      knowledge: 1, 
+      arts: 3, 
+      charisma: 2, 
+      languages: 1
+    },
+  ),
+  new Job('Artist', 28000, 
+    {
+      knowledge: 12, 
+      arts: 3
+    }, 
+    {
+      knowledge: 2, 
+      arts: 4
+    }, 
+  ),
+  new Job('Famous Artist', 80000,
+    {
+      knowledge: 18, 
+      arts: 25, 
+      languages: 2, 
+      coordination: 1
+    },
+    {
+      knowledge: 4, 
+      arts: 6 
+    },
+  ),
   // Management
-  new Job('Director', 63000, 65, 1, [{ job: 'Management Student', yearsWorking: 1 }]),
-  new Job('VP', 72000, 70, 1, [{ job: 'Management Student', yearsWorking: 1 }]),
-  new Job('SVP', 80000, 75, 1, [{ job: 'VP', yearsWorking: 1 }]),
-  new Job('EVP', 85000, 77, 1, [{ job: 'SVP', yearsWorking: 1 }]),
-  new Job('CFO', 88000, 78, 1, [{ job: 'Management Student', yearsWorking: 1 }]),
-  new Job('CEO', 120000, 85, 0, [{ job: 'SVP', yearsWorking: 1 }]),
+  new Job('Director', 63000, 
+    {
+      knowledge: 20, 
+      management: 8, 
+      logic: 6, 
+      charisma: 5 
+    }, 
+    {
+      knowledge: 2, 
+      management: 2, 
+      logic: 1, 
+      charisma: 1
+    }, 
+  ),
+  new Job('VP', 72000, 
+    {
+      knowledge: 24, 
+      management: 12, 
+      logic: 10, 
+      charisma: 6 
+    }, 
+    {
+      knowledge: 2,
+      management: 3,
+      logic: 2,
+      charisma: 1
+    }, 
+  ),
+  new Job('SVP', 80000, 
+    {
+      knowledge: 25,
+      management: 18,
+      logic: 16,
+      charisma: 3
+    }, 
+    {
+      knowledge: 2,
+      management: 4,
+      logic: 3,
+      charisma: 1
+    }, 
+  ),
+  new Job('EVP', 85000, 
+    {
+      knowledge: 26, 
+      management: 26, 
+      logic: 22, 
+      charisma: 4
+    }, 
+    {
+      knowledge: 2,
+      management: 4,
+      logic: 3,
+      charisma: 1
+    },
+  ),
+  new Job('CFO', 88000, 
+    {
+      knowledge: 28,
+      management: 30,
+      logic: 26,
+      charisma: 7
+    }, 
+    {
+      knowledge: 1,
+      management: 1,
+      logic: 1
+    }, 
+  ),
+  new Job('CEO', 120000, 
+    {
+      knowledge: 30,
+      management: 40,
+      logic: 38,
+      charisma: 10
+    }, 
+    {
+      knowledge: 2,
+      management: 5,
+      logic: 4,
+    }, 
+  ),
   // No Degree
   new Job('Bricklayer', 20000, { knowledge: 10 }, {}),
   new Job('Carpenter', 25000, { knowledge: 12, coordination: 1 }, {}),
