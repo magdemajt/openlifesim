@@ -59,7 +59,7 @@ export default function SimpleBottomNavigation({setPage, page, user}) {
           <BottomNavigationAction label="Cars" value={3} icon={<CarsIcon />} />
         ) : null}
         <BottomNavigationAction label="Relations" value={4} icon={<PeopleIcon />} />
-        {user !== undefined && user.age >= 16 ? (
+        {user !== undefined && user.age >= 5 ? (
         <BottomNavigationAction label="Life Settings" value={5} icon={<SettingsIcon />} className={classes.lastIconMargin}/>)
         : null}
       </BottomNavigation>

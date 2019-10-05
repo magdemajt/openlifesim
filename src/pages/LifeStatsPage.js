@@ -35,13 +35,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function LifeStatsPage ({ user, year, setUser, setPage }) {
+function LifeStatsPage ({ user, year, setUser, setPage, setColor, setInfo }) {
   const classes = useStyles();  
 
   return (
     <Grid container className={classes.root} justify="center" alignItems="center">
       <Grid item xs={12} className={classes.toTop}>
-        <LifeStatsTabs user={user} setUser={setUser} />
+        <LifeStatsTabs user={user} setUser={setUser} setColor={setColor} setInfo={setInfo} />
       </Grid>
     </Grid>
   );

@@ -1,7 +1,7 @@
 import { reduce, filter, forEach, isEqual, random } from 'lodash';
 import React from 'react';
 import { richIncomeMin, richIncomeMax, veryRichIncomeMin, veryRichIncomeMax, extremeRichSeed, poorMaxIncome, availableSkills } from './constants';
-import { child, student, unemployed } from './database';
+import { child, student, unemployed, extraTimeLessons } from './database';
 import LifeStats from './LifeStats';
 import Chance from 'chance';
 import uuidv1 from 'uuid/v1';
@@ -45,8 +45,7 @@ export default class User {
     this.livingWithParents = true;
     this.endgameStats = {
       totalEarnedMoney: 0,
-      totalSpentMoney: 0,
-      
+      totalSpentMoney: 0
     }
   }
   static update (oldUser) {
@@ -104,29 +103,67 @@ export default class User {
       });
     }
   }
+  moneyAfterYear = () => {
+    return this.income() + this.lifeStats.moneyAfterYear(this);
+  }
   nextYear = (setInfo, setColor, year, user = true, triggerSiblingsUpdate = true, triggerChildrenUpdate = true) => {
+    const extraLessonNextYearUser = () => {
+      if (user) {
+        forEach(this.lifeStats.extraLessons, extraTimeLesson => {
+          extraTimeLesson.nextYear(this);
+        })
+      }
+    };
+    const userParentsNextYear = () => {
+      if (this.parents !== null && user) {
+        const diedFather = this.parents.father.nextYearPerson(setInfo, setColor, year);
+        const diedMother = this.parents.mother.nextYearPerson(setInfo, setColor, year);
+        if (diedFather !== undefined || diedMother !== undefined) {
+          setColor("warning");
+          setInfo(<NumberFormat prefix={'At least one of your parents have died, inheritance: '} displayType="text" value={diedFather !== undefined ? diedFather.money : 0 + diedMother !== undefined ? diedMother.money : 0} thousandSeparator={true} />)
+        }
+      }
+    };
+    const siblingsAndChildrenNextYear = () => {
+      if (triggerSiblingsUpdate) {
+        forEach(this.siblings, (sib) => {
+          sib.nextYearPerson(setInfo, setColor, year, false);
+        });
+      }
+      if (triggerChildrenUpdate) {
+        forEach(this.children, (child) => {
+          child.nextYearPerson(setInfo, setColor, year, false);
+        });
+      }
+    };
+    const manageUserSchoolSystem = () => {
+      if (this.age === 6) {
+        student.applyForJob(this);
+        if (user) {
+          setColor("info");
+          setInfo('You started School.');
+        }
+      }
+      if (this.age === 16) {
+        unemployed.applyForJob(this);
+        if (user) {
+          setColor("info");
+          setInfo('You finished School. Now you pay for your food.');
+          this.changeSelectedFood(this.lifeStats.foodOptions[0]);
+        }
+      }
+    };
+
+
     if (this.lifeStats.geniusTrait && this.job !== null) {
       this.addSkill(this.job.skillGrowth);
     }
     this.job.nextYear(this);
-    if (this.parents !== null && user) {
-      const diedFather = this.parents.father.nextYearPerson(setInfo, setColor, year);
-      const diedMother = this.parents.mother.nextYearPerson(setInfo, setColor, year);
-      if (diedFather !== undefined || diedMother !== undefined) {
-        setColor("warning");
-        setInfo(<NumberFormat prefix={'At least one of your parents have died, inheritance: '} displayType="text" value={diedFather !== undefined ? diedFather.money : 0 + diedMother !== undefined ? diedMother.money : 0} thousandSeparator={true} />)
-      }
-    }
-    if (triggerSiblingsUpdate) {
-      forEach(this.siblings, (sib) => {
-        sib.nextYearPerson(setInfo, setColor, year, false);
-      });
-    }
-    if (triggerChildrenUpdate) {
-      forEach(this.children, (child) => {
-        child.nextYearPerson(setInfo, setColor, year, false);
-      });
-    }
+    
+    userParentsNextYear();
+    siblingsAndChildrenNextYear();
+    
+    
     if (this.age >= 16) {
       this.lifeStats.nextYear(this);
       this.houses.forEach(house => {
@@ -137,21 +174,9 @@ export default class User {
       });
     }
     this.age += 1;
-    if (this.age === 6) {
-      student.applyForJob(this);
-      if (user) {
-        setColor("info");
-        setInfo('You started School.');
-      }
-    }
-    if (this.age === 16) {
-      unemployed.applyForJob(this);
-      if (user) {
-        setColor("info");
-        setInfo('You finished School. Now you pay for your food.');
-        this.changeSelectedFood(this.lifeStats.foodOptions[0]);
-      }
-    }
+    
+    manageUserSchoolSystem();
+    extraLessonNextYearUser();
   }
   removeMoney = (toPay) => {
     this.money -= toPay;

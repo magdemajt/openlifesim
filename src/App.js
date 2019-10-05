@@ -74,7 +74,7 @@ function App() {
       return <CarsPage user={user} setUser={setUser} year={year} />
     }
     if (page === FOOD_PAGE) {
-      return <LifeStatsPage user={user} year={year} setUser={setUser} setPage={setPage} />
+      return <LifeStatsPage user={user} year={year} setUser={setUser} setPage={setPage} setInfo={setInfo} setColor={setColor} />
     }
     if (page === RELATIONS_PAGE) {
       return <RelationsPage user={user} year={year} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />

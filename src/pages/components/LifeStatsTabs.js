@@ -13,6 +13,7 @@ import WorkIcon from '@material-ui/icons/WorkOutline';
 import FoodPanel from './FoodPanel';
 import EntertainmentPanel from './EntertainmentPanel';
 import { Grid } from '@material-ui/core';
+import ExtraWorkPanel from './ExtraWorkPanel';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,10 +59,10 @@ function a11yProps(index) {
   };
 }
 
-export default function LifeStatsTabs({ user, setUser }) {
+export default function LifeStatsTabs({ user, setUser, setColor, setInfo }) {
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(2);
 
   function handleChange(event, newValue) {
     setValue(newValue);
@@ -82,9 +83,15 @@ export default function LifeStatsTabs({ user, setUser }) {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Food Settings" icon={<FoodIcon />} {...a11yProps(0)} />
-          <Tab label="Entertainment Settings" icon={<TvIcon />} {...a11yProps(1)} />
-          <Tab label="Extra Work Settings" icon={<WorkIcon />} {...a11yProps(2)} />
+          {user.age >= 16 ? (
+            <Tab label="Food Settings" icon={<FoodIcon />} {...a11yProps(0)} />
+          ) : null}
+          {user.age >= 16 ? (
+            <Tab label="Entertainment Settings" icon={<TvIcon />} {...a11yProps(1)} />
+          ) : null}
+          {user.age >= 16 ? (
+            <Tab label="Extra Work Settings" icon={<WorkIcon />} {...a11yProps(2)} />
+          ) : null}
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -92,14 +99,18 @@ export default function LifeStatsTabs({ user, setUser }) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <FoodPanel user={user} setUser={setUser} />
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          <EntertainmentPanel user={user} setUser={setUser} />
-        </TabPanel>
+        {user.age >= 16 ? (    
+          <TabPanel value={value} index={0} dir={theme.direction}>
+            <FoodPanel user={user} setUser={setUser} />
+          </TabPanel>
+        ) : null}
+        {user.age >= 16 ? (
+          <TabPanel value={value} index={1} dir={theme.direction}>
+            <EntertainmentPanel user={user} setUser={setUser} />
+          </TabPanel>
+        ) : null}
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Extra Work Panel
+          <ExtraWorkPanel setColor={setColor} setInfo={setInfo} user={user} setUser={setUser} />
         </TabPanel>
       </SwipeableViews>
     </React.Fragment>

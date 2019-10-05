@@ -25,16 +25,13 @@ export default class Person extends User {
   }
 
   randomizeSkills = () => {
-    let randomSkillPoints = Math.ceil((this.age - 6) * 1.5);
-    const randomizedSkills = shuffle(Object.keys(availableSkills));
-    forEach(randomizedSkills, (skillName) => {
-      let toAdd = random(0, 15);
-      if (randomSkillPoints < 15) {
-        toAdd = random(0, randomSkillPoints)
-      }
-      this.skills[skillName] += toAdd;
-      randomSkillPoints -= toAdd;
-    });
+    const findRandomJobToGetSkills = () => {
+      const luckNumber = random(1, 6) > 5 ? random(50, 120) : random(15, 50);
+      const posibleJobs = filter(jobs, (job) => job.salary / 1000 <= luckNumber);
+      return sample(posibleJobs);
+    }
+    this.skills = findRandomJobToGetSkills().requirement;
+    this.skills['knowledge'] += random(0, 5);
   };
 
   nextYearPerson = (setInfo, setColor, year, triggerSiblingsUpdate = true, triggerChildrenUpdate = false) => {

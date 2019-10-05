@@ -1,6 +1,6 @@
-import { random, sample, filter, includes } from 'lodash';
+import { random, sample, filter, includes, reduce } from 'lodash';
 import history from '../history';
-import { unemployed, nonJobWork } from './database';
+import { unemployed, nonJobWork, extraTimeLessons } from './database';
 import User from './User';
 
 const obligatory = [
@@ -394,12 +394,14 @@ export default class LifeStats {
     this.partyGoerTrait = random(0, 10) > 9;
     this.generateFoodOptions();
     this.generatePartyOptions();
+    this.extraLessons = [...extraTimeLessons]
   }
 
   timeLeftStats = (user) => {
     const jobTime = (includes(nonJobWork, user.job.name) ? 0 : 8);
     const houseTime = this.investorTrait ? 0 : Math.floor(user.houses.length / 3);
-    return 24 - this.selectedFood.timeDecay - this.selectedParty.timeDecay - this.sleepTime - (jobTime) - houseTime;
+    const extraTimeLessonsTime = reduce(this.extraLessons, ((sum, lesson) => lesson.active ? sum + lesson.time : sum), 0)
+    return 24 - this.selectedFood.timeDecay - this.selectedParty.timeDecay - this.sleepTime - (jobTime) - houseTime - extraTimeLessonsTime;
   }
 
   changeSleepTime = (newTime, user) => {
@@ -416,7 +418,6 @@ export default class LifeStats {
     this.foodOptions = optionsList;
   }
   changeSelectedFood = (newFood, user) => {
-    console.log(user, this.timeLeftStats(user))
     if (this.fussyEaterTrait && this.cheapFood >= 5 && newFood.price < 10000) {
       return false;
     }
@@ -437,6 +438,33 @@ export default class LifeStats {
   }
   generatePartyOptions = () => {
     this.partyOptions = [...sample(partyOptions)];
+  }
+  moneyAfterYear = (user) => {
+    let currentMoney = user.money;
+
+    const removeMoneyForFood = () => {
+      if (user.money >= this.selectedFood.price) {
+        currentMoney -= (this.selectedFood.price);
+      }
+    };
+
+    const removeMoneyForParties = () => {
+      if (this.fussyEaterTrait && this.cheapFood >= 5) {
+        currentMoney -= 10000;
+      } else if (user.money >= this.selectedParty.price) {
+        currentMoney -= (this.selectedParty.price);
+      } else {
+        return 0;
+      }
+    };
+    const removeMoneyForExtraTimeLessons = () => {
+      currentMoney -= reduce(extraTimeLessons, ((sum, lesson) => lesson.active ? sum + lesson.price : sum), 0);
+    };
+
+    removeMoneyForFood();
+    removeMoneyForParties();
+    removeMoneyForExtraTimeLessons();
+    return currentMoney;
   }
   nextYear = (user) => {
     if (this.fussyEaterTrait && this.cheapFood >= 5) {

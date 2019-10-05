@@ -7,6 +7,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import { isEqual } from 'lodash';
 import User, { updateUser } from '../../backend/User';
+import { extraTimeLessons } from '../../backend/database';
+import ExtraLessonDialog from './ExtraLessonDialog';
+import { ListSubheader } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,38 +21,40 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ExtraWorkPanel({ user = new User(), setUser }) {
+export default function ExtraWorkPanel({ user = new User(), setUser, setColor, setInfo }) {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState(user.lifeStats.selectedParty);
+  const [extraLesson, setExtraLesson] = React.useState(null);
 
-  const handleToggle = newChecked => () => {
-    const success = user.changeSelectedParty(newChecked);
-    if (success) {
-      setChecked(newChecked);
-      setUser(updateUser(user));
-    }
+  const handleToggle = lesson => () => {
+    setExtraLesson(lesson);
   };
 
   return (
-    <List className={classes.root}>
-      {user.lifeStats.partyOptions.map(partyOption => {
-        const labelId = `checkbox-list-label-${partyOption.name}`;
+    <React.Fragment>
+      <List className={classes.root} subheader={
+        <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
+          Extra lessons
+        </ListSubheader>}>
+        {user.lifeStats.extraLessons.map(lesson => {
+          const labelId = `checkbox-list-label-${lesson.name}`;
 
-        return (
-          <ListItem key={partyOption.name} role={undefined} dense button onClick={handleToggle(partyOption)}>
-            <ListItemIcon>
-              <Checkbox
-                edge="end"
-                checked={isEqual(checked, partyOption)}
-                tabIndex={-1}
-                disableRipple
-                inputProps={{ 'aria-labelledby': labelId }}
-              />
-            </ListItemIcon>
-            <ListItemText id={labelId} primary={`${partyOption.name}`} secondary={`Price: ${partyOption.price} Time: ${partyOption.timeDecay}`}/>
-          </ListItem>
-        );
-      })}
-    </List>
+          return (
+            <ListItem key={lesson.name} role={undefined} dense button onClick={handleToggle(lesson)}>
+              <ListItemIcon>
+                <Checkbox
+                  edge="end"
+                  checked={lesson.active}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ 'aria-labelledby': labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText id={labelId} primary={`${lesson.name}`} secondary={`Price: ${lesson.price} Time: ${lesson.time}`}/>
+            </ListItem>
+          );
+        })}
+      </List>
+      <ExtraLessonDialog user={user} setUser={setUser} setExtraLesson={setExtraLesson} extraLesson={extraLesson} setColor={setColor} setInfo={setInfo}/>
+    </React.Fragment>
   );
 }

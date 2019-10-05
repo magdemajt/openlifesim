@@ -5,6 +5,7 @@ import JobOffer from "./JobOffer";
 import { random, filter, sample, forEach } from 'lodash';
 import HouseOffer from "./HouseOffer";
 import CarOffer from "./CarOffer";
+import ExtraTimeLesson from "./ExtraTimeLesson";
 
 export const houses = [
   new House('Studio Apartment', 1, 1, 1.3),
@@ -41,7 +42,7 @@ export const houses = [
 // new Job(name, salary, requirements, skillsGrowth)
 
 export const university = [
-  new Job('PE Student', -2500, { knowledge: 10 }, { sport: 1, charisma: 1 }),
+  new Job('PE Student', -2500, { knowledge: 10 }, { sport: 1, charisma: 1, coordination: 1 }),
   new Job('Physics Student', -5000, { knowledge: 16 }, { knowledge: 1, science: 1, logic: 1 }),
   new Job('Medicine Student', -5000, { knowledge: 16 }, { knowledge: 1, biology: 1, science: 1 }),
   new Job('Chemistry Student', -5000, { knowledge: 16 }, { knowledge: 1, logic: 1, science: 2 }),
@@ -50,7 +51,7 @@ export const university = [
   new Job('Management Student', -10000, { knowledge: 16 }, { management: 1, knowledge: 1, charisma: 1, logic: 1 }),
   new Job('Accounting Student', -5000, { knowledge: 14 }, { knowledge: 1, logic: 1, counting: 1 }),
   new Job('Art Student', -5000, { knowledge: 10 }, { arts: 1 }),
-  new Job('Maths Student', -5000, { knowledge: 16, logic: 6 }, { knowledge: 1, logic: 2 }),
+  new Job('Maths Student', -5000, { knowledge: 16, logic: 6 }, { knowledge: 1, logic: 2, counting: 1 }),
   new Job('Computer Science Student', -5000, { knowledge: 14, logic: 2 }, { knowledge: 1, logic: 1, programming: 2 /* <-- zwiększone o 1*/ }),
   new Job('Part-time Working Student', 10000, { knowledge: 10 }, {
     knowledge: 1,
@@ -738,6 +739,7 @@ export const generateJobs = (user, reqOffset = 1) => {
   for(let i = 0; i < filteredJ.length * 2; i += 1){
     jobList.push(new JobOffer(sample(filteredJ)));
   }
+
   return jobList;
 }
 
@@ -820,6 +822,10 @@ export const cars = [
   new Car('Bitta SC', 1984, 63000, 30250, 180, '3.0 L'),
   new Car('Mercedes 300 SE W 126', 1986, 65000, 30250, 180, '3.0 L'),
   new Car('Porsche 928S', 1987, 100000, 50000, 310, '4.7 L'),
+];
+
+export const extraTimeLessons = [
+  new ExtraTimeLesson()
 ];
 
 export const generateCars = (user, currentYear) => {
