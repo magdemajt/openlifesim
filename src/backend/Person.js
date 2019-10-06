@@ -24,10 +24,10 @@ export default class Person extends User {
     
   }
 
-  randomizeSkills = () => {
+  randomizeSkills = (maxLuckyNumber = 0) => {
     const findRandomJobToGetSkills = () => {
-      const luckNumber = random(1, 6) > 5 ? random(50, 120) : random(15, 50);
-      const posibleJobs = filter(jobs, (job) => job.salary / 1000 <= luckNumber);
+      const luckNumber = maxLuckyNumber > 0 ? Math.min(maxLuckyNumber, random(1, 6) > 5 ? random(50, 120) : random(15, 50)) : random(1, 6) > 5 ? random(50, 120) : random(15, 50);
+      const posibleJobs = filter(jobs, (job) => job.salary / 1000 <= luckNumber && job.name !== 'Genius');
       return sample(posibleJobs);
     }
     this.skills = findRandomJobToGetSkills().requirement;
@@ -53,15 +53,10 @@ export default class Person extends User {
           return {money: inheritedMoney, housesLength: Math.ceil(this.houses.length / this.children.length), died: true};
         }
       }
-      if (this.age === 16 && this.job === null) {
-        if (random(1, 2) > 1) {
-          const genJobs = generateJobs(this, 0);
-          this.job = sample(genJobs);
-        } else {
-          this.job = sample(filter(getEducation(), ed => ed.currentSalary >= 0));
-        }
+      if (this.age === 16) {
+        this.randomizeSkills(30);
       }
-      if (this.age >= 25 && this.job !== retired) {
+      if (this.age >= 25 && this.job !== retired && (random(1, 5) > 4 || this.job === unemployed)) {
         this.checkBetterJobs();
       }
       if (this.age > 60) {
@@ -183,6 +178,7 @@ export default class Person extends User {
   static generateSibling (user) {
     const generated = new Person();
     generated.age = random(user.age, user.age + 10);
+    generated.age = user.parents.father.age - generated.age < 16 ? user.parents.father.age - 16 : (user.parents.mother.age - generated.age < 16 ? user.parents.mother.age - 16 : generated.age);
     generated.surename = user.surename;
     generated.relation = random(60, 95);
     generated.relationType = FAMILY_RELATION;

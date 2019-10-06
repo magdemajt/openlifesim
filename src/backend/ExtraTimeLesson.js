@@ -11,8 +11,17 @@ export default class ExtraTimeLesson {
     this.requiredSkills = requiredSkills
     this.active = false;
   }
+  checkIfEnoughSkills = (user = new User()) => {
+    let hasEnough = true;
+    forEach(this.requiredSkills, (skill, skillName) => {
+      if (user.skills[skillName] < skill) {
+        hasEnough = false;
+      }
+    });
+    return hasEnough;
+  }
   checkIfCanActivate = (user = new User()) => {
-    return user.timeLeft() >= this.time && user.moneyAfterYear() >= this.price;
+    return user.timeLeft() >= this.time && user.moneyAfterYear() >= this.price && this.checkIfEnoughSkills(user);
   }
   nextYear = (user = new User()) => {
     const addSkillsForMoneyIfActive = () => {
@@ -30,12 +39,8 @@ export default class ExtraTimeLesson {
       
     }
     const deactivateIfNotEnoughSkills = () => {
-      if (this.active) {
-        forEach(this.requiredSkills, (skill, skillName) => {
-          if (user.skills[skillName] < skill) {
-            this.active = false;
-          }
-        })
+      if (this.active && !this.checkIfEnoughSkills(user)) {
+        this.active = false;
       }
     }
 

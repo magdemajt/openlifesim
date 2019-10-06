@@ -441,7 +441,6 @@ export default class LifeStats {
   }
   moneyAfterYear = (user) => {
     let currentMoney = user.money;
-
     const removeMoneyForFood = () => {
       if (user.money >= this.selectedFood.price) {
         currentMoney -= (this.selectedFood.price);

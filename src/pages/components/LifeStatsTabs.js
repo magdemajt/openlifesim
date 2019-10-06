@@ -62,7 +62,7 @@ function a11yProps(index) {
 export default function LifeStatsTabs({ user, setUser, setColor, setInfo }) {
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(user.age < 16 ? 2 : 0);
 
   function handleChange(event, newValue) {
     setValue(newValue);

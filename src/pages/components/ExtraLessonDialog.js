@@ -64,14 +64,14 @@ export default function ExtraLessonDialog({ user, setUser, extraLesson = ExtraTi
   }
 
   function activateExtraLesson (lesson) {
-    if (lesson.checkIfCanActivate()) {
+    if (lesson.checkIfCanActivate(user)) {
       lesson.active = true;
       setUser(updateUser(user));
       setColor("success");
       setInfo(`You started going to ${lesson.name}`);
     } else {
       setColor("error");
-      setInfo(`You don't have enough time or money.`);
+      setInfo(`You don't have enough skills, time or money.`);
     }
   }
   function deactivateExtraLesson (lesson) {

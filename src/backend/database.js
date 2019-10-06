@@ -621,6 +621,39 @@ export const jobs = [
       arts: 6 
     },
   ),
+  new Job('Famous Artist', 80000,
+    {
+      knowledge: 18, 
+      arts: 25, 
+      languages: 2, 
+      coordination: 1
+    },
+    {
+      knowledge: 4, 
+      arts: 6 
+    },
+  ),
+  // sport
+  new Job('Sportsman', 15000,
+    { sports: 10 },
+    {
+      sports: 40, 
+    },
+  ),
+  new Job('Sportsman In Great Team', 80000,
+    {},
+    {
+      sports: 60, 
+    },
+  ),
+  new Job('World-class Sportsman', 800000,
+    {},
+    {
+      knowledge: 10, 
+      sports: 120
+    },
+  ),
+
   // Management
   new Job('Director', 63000, 
     {
@@ -825,7 +858,10 @@ export const cars = [
 ];
 
 export const extraTimeLessons = [
-  new ExtraTimeLesson()
+  new ExtraTimeLesson('Gym', 1000, 2, { sport: 1 }, { knowledge: 5 }),
+  new ExtraTimeLesson('Sport Classes', 10000, 2, { sport: 1 }),
+  new ExtraTimeLesson('Running', 1000, 2, { coordination: 1 }, { knowledge: 5 }),
+  new ExtraTimeLesson('Professional Sport', 10000, 8, { sport: 4 }, { sport: 2 }),
 ];
 
 export const generateCars = (user, currentYear) => {
