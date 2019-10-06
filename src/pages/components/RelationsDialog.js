@@ -10,6 +10,7 @@ import Person from '../../backend/Person'
 import { Typography, makeStyles, TextField, Divider, Grid } from '@material-ui/core';
 import NumberFormat from 'react-number-format';
 import { doFriendlyStuff, giveMoney, askForMoney, assault, shoutAt, askToBeADate, joke, talk, doRomanticStuff, tryForABaby } from '../../backend/PersonActions';
+import SleepButton from './SleepButton';
 
 const useStyles = makeStyles(theme => ({
   dialog: {
@@ -27,13 +28,20 @@ const useStyles = makeStyles(theme => ({
 
 export default function RelationsDialog({ user, setUser, person = new Person(), setOptions, options, setPerson, setColor, setInfo }) {
   const [amount, setAmount] = React.useState(0);
+  const [canClose, setCanClose] = React.useState(true);
   const classes = useStyles();
   const optionsDefaulted = { showMoneyOptions: false, showFamilyOptions: false, showLoveOptions: false, showMateOptions: false, showFriendsOptions: false, fiance: false, married: false, ...options };
 
+  React.useEffect(() => {
+    console.log(canClose)
+  }, [canClose])
+
   function handleClose() {
-    setUser(updateUser(user));
-    setPerson(null);
-    setOptions({});
+    if (canClose) {
+      setUser(updateUser(user));
+      setPerson(null);
+      setOptions({});
+    }
   }
   function doFriendlyStuffClick (user, person) {
     if (doFriendlyStuff(user, person)) {
@@ -173,9 +181,9 @@ export default function RelationsDialog({ user, setUser, person = new Person(), 
             {optionsDefaulted.showLoveOptions && user.age >= 16 && user.gender !== person.gender ? (
               <React.Fragment>
                 <Grid item xs={12}>
-                  <Button color="secondary" className={classes.button} onClick={() => tryForABabyClick(user, person)}>
+                  <SleepButton color="secondary" className={classes.button} onClick={() => tryForABabyClick(user, person)}>
                     Try for a baby
-                  </Button>
+                  </SleepButton>
                 </Grid>
               </React.Fragment>
             ): null}
@@ -239,9 +247,9 @@ export default function RelationsDialog({ user, setUser, person = new Person(), 
             </Grid>
             <Grid item xs={12}>
               <Grid container justify="center" alignContent="center">
-                <Button color="secondary" className={classes.button} onClick={() => giveMoneyClick(user, person)}>
+                <SleepButton setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => giveMoneyClick(user, person)}>
                   Give money!
-                </Button>
+                </SleepButton>
               </Grid>
             </Grid>
             {optionsDefaulted.showMoneyOptions && user.age >= 10 ? (

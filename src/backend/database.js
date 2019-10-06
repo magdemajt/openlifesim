@@ -635,23 +635,23 @@ export const jobs = [
   ),
   // sport
   new Job('Sportsman', 15000,
-    { sports: 10 },
+    { sport: 40 },
     {
-      sports: 40, 
+      sport: 10, 
     },
   ),
   new Job('Sportsman In Great Team', 80000,
-    {},
-    {
-      sports: 60, 
+    { 
+      sport: 60
     },
+    {},
   ),
   new Job('World-class Sportsman', 800000,
-    {},
     {
       knowledge: 10, 
-      sports: 120
+      sport: 120
     },
+    {},
   ),
 
   // Management
@@ -859,7 +859,6 @@ export const cars = [
 
 export const extraTimeLessons = [
   new ExtraTimeLesson('Gym', 1000, 2, { sport: 1 }, { knowledge: 5 }),
-  new ExtraTimeLesson('Sport Classes', 10000, 2, { sport: 1 }),
   new ExtraTimeLesson('Running', 1000, 2, { coordination: 1 }, { knowledge: 5 }),
   new ExtraTimeLesson('Professional Sport', 10000, 8, { sport: 4 }, { sport: 2 }),
 ];

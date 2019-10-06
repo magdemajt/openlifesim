@@ -25,13 +25,20 @@ export default class Person extends User {
   }
 
   randomizeSkills = (maxLuckyNumber = 0) => {
+    const generateNormalizedRandomNumber = () => {
+      if (random(1, 10) > 9) {
+        return random(31, 80);
+      }
+      return random(15, 40);
+    }
     const findRandomJobToGetSkills = () => {
-      const luckNumber = maxLuckyNumber > 0 ? Math.min(maxLuckyNumber, random(1, 6) > 5 ? random(50, 120) : random(15, 50)) : random(1, 6) > 5 ? random(50, 120) : random(15, 50);
-      const posibleJobs = filter(jobs, (job) => job.salary / 1000 <= luckNumber && job.name !== 'Genius');
+      const randomNumber = generateNormalizedRandomNumber();
+      const luckNumber = maxLuckyNumber > 0 ? Math.min(maxLuckyNumber, randomNumber) : randomNumber;
+      const posibleJobs = filter(jobs, (job) => (job.salary / 1000 <= luckNumber && job.name !== 'Genius'));
+      console.log(posibleJobs)
       return sample(posibleJobs);
     }
     this.skills = findRandomJobToGetSkills().requirement;
-    this.skills['knowledge'] += random(0, 5);
   };
 
   nextYearPerson = (setInfo, setColor, year, triggerSiblingsUpdate = true, triggerChildrenUpdate = false) => {
