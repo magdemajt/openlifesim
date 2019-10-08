@@ -172,16 +172,16 @@ export default function RelationsDialog({ user, setUser, person = new Person(), 
             {optionsDefaulted.showLoveOptions && user.age >= 10 ? (
               <React.Fragment>
                 <Grid item xs={12}>
-                  <Button color="secondary" className={classes.button} onClick={() => doRomanticStuffClick(user, person)}>
+                  <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => doRomanticStuffClick(user, person)}>
                     Do Romantic Stuff!
-                  </Button>
+                  </SleepButton>
                 </Grid>
               </React.Fragment>
             ): null}
             {optionsDefaulted.showLoveOptions && user.age >= 16 && user.gender !== person.gender ? (
               <React.Fragment>
                 <Grid item xs={12}>
-                  <SleepButton color="secondary" className={classes.button} onClick={() => tryForABabyClick(user, person)}>
+                  <SleepButton canClose={canClose} color="secondary" className={classes.button} onClick={() => tryForABabyClick(user, person)}>
                     Try for a baby
                   </SleepButton>
                 </Grid>
@@ -189,25 +189,25 @@ export default function RelationsDialog({ user, setUser, person = new Person(), 
             ): null}
             <Grid item xs={12}>
               <Grid container justify="center" alignContent="center">
-                <Button color="secondary" className={classes.button} onClick={() => talkClick(user, person)}>
+                <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => talkClick(user, person)}>
                   Talk
-                </Button>
+                </SleepButton>
               </Grid>
             </Grid>
             <Grid item xs={12}>
               <Grid container justify="center" alignContent="center">
-                <Button color="secondary" className={classes.button} onClick={() => jokeClick(user, person)}>
+                <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => jokeClick(user, person)}>
                   Joke
-                </Button>
+                </SleepButton>
               </Grid>
             </Grid>
             {user.lifeStats.happiness >= 50 && person.relation > 30 ? (
               <React.Fragment>
                 <Grid item xs={12}>
                   <Grid container justify="center" alignContent="center">
-                    <Button color="secondary" className={classes.button} onClick={() => doFriendlyStuffClick(user, person)}>
+                    <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => doFriendlyStuffClick(user, person)}>
                       Do Friendly Stuff!
-                    </Button>
+                    </SleepButton>
                   </Grid>
                 </Grid>
               </React.Fragment>
@@ -215,18 +215,18 @@ export default function RelationsDialog({ user, setUser, person = new Person(), 
             <React.Fragment>
               <Grid item xs={12}>
                 <Grid container justify="center" alignContent="center">
-                  <Button color="secondary" className={classes.button} onClick={() => assaultClick(user, person)}>
+                  <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => assaultClick(user, person)}>
                     Assault
-                  </Button>
+                  </SleepButton>
                 </Grid>
               </Grid>
             </React.Fragment>
             )}
             <Grid item xs={12}>
               <Grid container justify="center" alignContent="center">
-                <Button color="secondary" className={classes.button} onClick={() => shoutAtClick(user, person)}>
+                <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => shoutAtClick(user, person)}>
                   Shout at
-                </Button>
+                </SleepButton>
               </Grid>
             </Grid>
             <Grid item xs={12}>
@@ -247,7 +247,7 @@ export default function RelationsDialog({ user, setUser, person = new Person(), 
             </Grid>
             <Grid item xs={12}>
               <Grid container justify="center" alignContent="center">
-                <SleepButton setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => giveMoneyClick(user, person)}>
+                <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => giveMoneyClick(user, person)}>
                   Give money!
                 </SleepButton>
               </Grid>
@@ -256,28 +256,28 @@ export default function RelationsDialog({ user, setUser, person = new Person(), 
               <React.Fragment>
                 <Grid item xs={12}>
                   <Grid container justify="center" alignContent="center">
-                    <Button color="secondary" className={classes.button} onClick={() => askForMoneyClick(user, person)}>
+                    <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => askForMoneyClick(user, person)}>
                       Ask for money
-                    </Button>
+                    </SleepButton>
                   </Grid>
                 </Grid>
-                <Button color="secondary" className={classes.button}>
+                <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button}>
 
-                </Button>
+                </SleepButton>
               </React.Fragment>
             ): null}
             {optionsDefaulted.showFriendsOptions && user.age >= 10 && person.gender === user.sexuality && person.relation >= 80 && !optionsDefaulted.fiance ? (
               <React.Fragment>
                 <Grid item xs={12}>
                   <Grid container justify="center" alignContent="center">
-                    <Button color="secondary" className={classes.button} onClick={() => askToBeADateClick(user, person)}>
+                    <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button} onClick={() => askToBeADateClick(user, person)}>
                       Ask to be a date
-                    </Button>
+                    </SleepButton>
                   </Grid>
                 </Grid>
-                <Button color="secondary" className={classes.button}>
+                <SleepButton canClose={canClose} setCanClose={setCanClose} color="secondary" className={classes.button}>
 
-                </Button>
+                </SleepButton>
               </React.Fragment>
             ): null}
             </Grid> 

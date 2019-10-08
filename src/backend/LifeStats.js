@@ -397,15 +397,15 @@ export default class LifeStats {
     this.extraLessons = [...extraTimeLessons]
   }
 
-  timeLeftStats = (user) => {
+  timeLeftStats = (user, interactionsMade) => {
     const jobTime = (includes(nonJobWork, user.job.name) ? 0 : 8);
     const houseTime = this.investorTrait ? 0 : Math.floor(user.houses.length / 3);
     const extraTimeLessonsTime = reduce(this.extraLessons, ((sum, lesson) => lesson.active ? sum + lesson.time : sum), 0)
-    return 24 - this.selectedFood.timeDecay - this.selectedParty.timeDecay - this.sleepTime - (jobTime) - houseTime - extraTimeLessonsTime;
+    return 24 - this.selectedFood.timeDecay - this.selectedParty.timeDecay - this.sleepTime - (jobTime) - houseTime - extraTimeLessonsTime - interactionsMade;
   }
 
   changeSleepTime = (newTime, user) => {
-    if (this.sleepTime - newTime + this.timeLeftStats(user) >= 0) {
+    if (this.sleepTime - newTime + this.timeLeftStats(user, user.interactionsMade) >= 0) {
       this.timeLeft += this.sleepTime - newTime;
       this.sleepTime = newTime;
       return true;
@@ -421,7 +421,7 @@ export default class LifeStats {
     if (this.fussyEaterTrait && this.cheapFood >= 5 && newFood.price < 10000) {
       return false;
     }
-    if (this.selectedFood.timeDecay - newFood.timeDecay + this.timeLeftStats(user) >= 0) {
+    if (this.selectedFood.timeDecay - newFood.timeDecay + this.timeLeftStats(user, user.interactionsMade) >= 0) {
       this.timeLeft += this.selectedFood.timeDecay - newFood.timeDecay;
       this.selectedFood = newFood;
       return true;
@@ -429,7 +429,7 @@ export default class LifeStats {
     return false;
   }
   changeSelectedParty = (newParty, user) => {
-    if (this.selectedParty.timeDecay - newParty.timeDecay + this.timeLeftStats(user) >= 0) {
+    if (this.selectedParty.timeDecay - newParty.timeDecay + this.timeLeftStats(user, user.interactionsMade) >= 0) {
       this.timeLeft += this.selectedParty.timeDecay - newParty.timeDecay;
       this.selectedParty = newParty;
       return true;

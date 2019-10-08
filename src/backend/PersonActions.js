@@ -1,7 +1,7 @@
 import User from "./User";
 import { random } from 'lodash';
 import Person from "./Person";
-import { FAMILY_RELATION, LOVE_RELATION, MATES_RELATION, FRIENDS_RELATION } from "./database";
+import { FAMILY_RELATION, LOVE_RELATION, MATES_RELATION, FRIENDS_RELATION, student } from "./database";
 
 const coeff = 0.2;
 
@@ -24,15 +24,48 @@ const checkRelationChange = (person) => {
 }
 
 export const askForMoney = (user = new User(), person = new Person(), amount) => {
-  if (person.money > 0) {
-    const percentageOfMoney = Math.round(amount / person.money * 100);
-    const chanceOfGetting = Math.max(100 - percentageOfMoney * percentageOfMoney * coeff, 5);
-    if (person.relation > 50 && (person.relationType !== 0 && person.relationType !== MATES_RELATION) && random(0, 100) > 100 - chanceOfGetting && person.money >= amount) {
-      user.addMoney(amount)
-      person.removeMoney(amount);
-      person.relation -= random(1, 5);
-      checkRelationChange(person);
-      return true;
+  user.interactionsMade += 1;
+  if(amount < 0){
+    return false;
+  } 
+  else{
+    if (person.money > 0) {
+      console.log(person.money);
+      const percentageOfMoney = Math.round(amount / person.money * 100);
+      const chanceOfGetting = Math.max(100 - percentageOfMoney * percentageOfMoney * 2 + person.relation/10, 5);   /*new coeff*/
+      if (person.relation > 50 && (person.relationType !== 0 && person.relationType !== MATES_RELATION) && person.money >= amount) {
+        let chance = chanceOfGetting;
+        if((user.age <= 22 || user.job === student) && chance < 85){
+          chance += 10;
+        }
+        function giveAskedMoney(amount){
+          user.addMoney(amount)
+          person.removeMoney(amount);
+          person.relation -= random(1, 5);
+          checkRelationChange(person);
+          return true;
+        }
+        if(amount <= 500 && random(0, 100) < chance){
+          giveAskedMoney(amount);
+        }
+        else if(amount <= 2000 && random(20, 100) < chance){
+          giveAskedMoney(amount);
+        }
+        else if(amount <= 5000 && random(50, 100) < chance){
+          giveAskedMoney(amount);
+        }
+        else if(amount <= 10000 && random(80, 100) < chance){
+          giveAskedMoney(amount);
+        }
+        else if(amount <= 20000 && random(95, 100) < chance){
+          giveAskedMoney(amount);
+        }
+        else{
+          person.relation -= random(5, 15);
+          return false;
+        }
+        return true;
+      }
     }
   }
   person.relation -= random(5, 15);
