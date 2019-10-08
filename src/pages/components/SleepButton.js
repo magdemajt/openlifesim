@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 
-export default function SleepButton({ setCanClose, onClick, children, ...props}) {
+export default function SleepButton({ setCanClose, canClose, onClick, children, ...props}) {
   const [timeSleep, setTimeSleep] = useState(0);
-  
-  let currentTime = 5;
 
   useEffect(() => {
     let interval = null;
@@ -20,7 +18,13 @@ export default function SleepButton({ setCanClose, onClick, children, ...props})
 
     decreaseTimeSleepOrCanClose();
     // eslint-disable-next-line
-  }, [timeSleep]); 
+  }, [timeSleep]);
+  useEffect(() => {
+    if (canClose && timeSleep > 0) {
+      setCanClose(false);
+    }
+    // eslint-disable-next-line
+  }, [canClose])
 
   const onClickSleep = (e) => {
     if (timeSleep === 0) {
