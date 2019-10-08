@@ -72,6 +72,7 @@ export const askForMoney = (user = new User(), person = new Person(), amount) =>
   return false;
 }
 export const giveMoney = (user = new User(), person = new Person(), amount) => {
+  user.interactionsMade += 1;
   const increaseInRelation = random(0, 8);
   if (amount <= user.money && amount > 0) {
     user.removeMoney(amount);
@@ -82,6 +83,7 @@ export const giveMoney = (user = new User(), person = new Person(), amount) => {
   return false;
 }
 export const doFriendlyStuff = (user = new User(), person = new Person()) => {
+  user.interactionsMade += 1;
   const change = random(-5, 15);
   person.relation += change
   checkRelationChange(person);
@@ -92,6 +94,7 @@ export const doFriendlyStuff = (user = new User(), person = new Person()) => {
 }
 
 export const askToBeADate = (user = new User(), person = new Person()) => {
+  user.interactionsMade += 1;
   if (person.relation > 80 && random(1, 2) > 1 ) {
     person.relation += 5;
     person.relationType = LOVE_RELATION;
@@ -104,6 +107,7 @@ export const askToBeADate = (user = new User(), person = new Person()) => {
 }
 
 export const joke = (user = new User(), person = new Person()) => {
+  user.interactionsMade += 1;
   if (random(1, 4) > 3) {
     person.relation -= 5;
     checkRelationChange(person);
@@ -115,6 +119,7 @@ export const joke = (user = new User(), person = new Person()) => {
 }
 
 export const talk = (user = new User(), person = new Person()) => {
+  user.interactionsMade += 1;
   const change = random(-1, 5);
   person.relation += change
   checkRelationChange(person);
@@ -125,12 +130,14 @@ export const talk = (user = new User(), person = new Person()) => {
 }
 
 export const shoutAt = (user = new User(), person = new Person()) => {
+  user.interactionsMade += 1;
   person.relation -= 20;
   checkRelationChange(person);
   user.lifeStats.happiness += 5;
 }
 
 export const assault = (user = new User(), person = new Person()) => {
+  user.interactionsMade += 1;
   person.relation = 0;
   checkRelationChange(person);
   if (random(1, 2) > 1) {
@@ -142,6 +149,7 @@ export const assault = (user = new User(), person = new Person()) => {
 }
 
 export const doRomanticStuff = (user = new User(), person = new User()) => {
+  user.interactionsMade += 1;
   person.relation += 10;
   user.lifeStats.happiness += 2;
   user.removeMoney(random(500, 1000));
@@ -149,6 +157,7 @@ export const doRomanticStuff = (user = new User(), person = new User()) => {
 }
 
 export const tryForABaby = (user = new User(), person = new Person()) => {
+  user.interactionsMade += 1;
   if (random (1, 4) > 3) {
     Person.generateUserChildren(user.gender === 1 ? user : person, user.gender === 0 ? user : person);
     user.lifeStats.happiness += 10;
@@ -158,6 +167,7 @@ export const tryForABaby = (user = new User(), person = new Person()) => {
 }
 ///////////////////////////////////////////////////
 export const propose = (user = new User(), person = new Person()) => {
+  user.interactionsMade += 1;
   if (person.relation > 95 && random(1, 10) > 9) {
     user.lifeStats.happiness += 10;
     return true;
@@ -169,6 +179,6 @@ export const propose = (user = new User(), person = new Person()) => {
 }
 
 export const marry = (user = new User(), person = new Person()) => {
-
+  user.interactionsMade += 1;
 }
 
