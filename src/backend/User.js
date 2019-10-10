@@ -69,7 +69,7 @@ export default class User {
     return this.job.currentSalary + moneyForHouses;
   }
   timeLeft = () => {
-    return this.lifeStats.timeLeftStats(this, this.interactionsMade);
+    return this.lifeStats.timeLeftStats(this);
   }
   changeSleepTime = (newSleepTime) => {
     return this.lifeStats.changeSleepTime(newSleepTime, this);
@@ -153,6 +153,10 @@ export default class User {
           this.changeSelectedFood(this.lifeStats.foodOptions[0]);
         }
       }
+    }
+
+    const clearInteractions = () => {
+      this.interactionsMade = 0;
     };
 
 
@@ -178,7 +182,7 @@ export default class User {
     
     manageUserSchoolSystem();
     extraLessonNextYearUser();
-    this.interactionsMade = 0;
+    clearInteractions();
   }
   removeMoney = (toPay) => {
     this.money -= toPay;
