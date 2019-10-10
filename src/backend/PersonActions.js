@@ -2,6 +2,7 @@ import User from "./User";
 import { random } from 'lodash';
 import Person from "./Person";
 import { FAMILY_RELATION, LOVE_RELATION, MATES_RELATION, FRIENDS_RELATION, student } from "./database";
+import timeLeft from "./User"
 
 const coeff = 0.2;
 
@@ -26,7 +27,7 @@ const checkRelationChange = (person) => {
 }
 
 export const askForMoney = (user = new User(), person = new Person(), amount) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -112,7 +113,7 @@ export const askForMoney = (user = new User(), person = new Person(), amount) =>
   return false;
 }
 export const giveMoney = (user = new User(), person = new Person(), amount) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -128,7 +129,7 @@ export const giveMoney = (user = new User(), person = new Person(), amount) => {
   return false;
 }
 export const doFriendlyStuff = (user = new User(), person = new Person()) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -144,7 +145,7 @@ export const doFriendlyStuff = (user = new User(), person = new Person()) => {
 }
 
 export const askToBeADate = (user = new User(), person = new Person()) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -162,7 +163,7 @@ export const askToBeADate = (user = new User(), person = new Person()) => {
 }
 
 export const joke = (user = new User(), person = new Person()) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -179,7 +180,7 @@ export const joke = (user = new User(), person = new Person()) => {
 }
 
 export const talk = (user = new User(), person = new Person()) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -195,7 +196,7 @@ export const talk = (user = new User(), person = new Person()) => {
 }
 
 export const shoutAt = (user = new User(), person = new Person()) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -207,7 +208,7 @@ export const shoutAt = (user = new User(), person = new Person()) => {
 }
 
 export const assault = (user = new User(), person = new Person()) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -224,7 +225,7 @@ export const assault = (user = new User(), person = new Person()) => {
 }
 
 export const doRomanticStuff = (user = new User(), person = new User()) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -237,7 +238,7 @@ export const doRomanticStuff = (user = new User(), person = new User()) => {
 }
 
 export const tryForABaby = (user = new User(), person = new Person()) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -252,7 +253,7 @@ export const tryForABaby = (user = new User(), person = new Person()) => {
 }
 ///////////////////////////////////////////////////
 export const propose = (user = new User(), person = new Person()) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
@@ -269,7 +270,7 @@ export const propose = (user = new User(), person = new Person()) => {
 }
 
 export const marry = (user = new User(), person = new Person()) => {
-  if(timeLeft() > 0){
+  if (user.timeLeft() > 0){
     addOneInteraction(user);
   } 
   else {
