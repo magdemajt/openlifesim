@@ -36,6 +36,12 @@ export default function StartPage({ setStarted }) {
         </Grid>
         <Grid item xs={12} className={classes.centerizeSmall}>
           <Typography>
+            Game is randomly generated.
+            Any resemblance to real events or names is a coincidence.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} className={classes.centerizeSmall}>
+          <Typography>
             Any suggestions or problems: <b>contact@openlifesim.com</b>
           </Typography>
         </Grid>

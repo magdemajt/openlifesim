@@ -4,6 +4,7 @@ import { richIncomeMin, richIncomeMax, veryRichIncomeMin, veryRichIncomeMax, ext
 import { child, student, unemployed, extraTimeLessons } from './database';
 import LifeStats from './LifeStats';
 import Chance from 'chance';
+import Cookies from 'js-cookie';
 import uuidv1 from 'uuid/v1';
 import NumberFormat from 'react-number-format';
 
@@ -18,7 +19,9 @@ export const generateUser = () => {
 };
 
 export const updateUser = (oldUser) => {
-  return User.update(oldUser);
+  const newUser = User.update(oldUser);
+  Cookies.set('save', { user: newUser, ...Cookies.getJSON('save') });
+  return newUser;
 };
 
 export default class User {
@@ -155,7 +158,7 @@ export default class User {
     };
 
 
-    if (this.lifeStats.geniusTrait && this.job !== null) {
+    if (this.lifeStats.geniusTrait && this.job !== null && (user || random(1, 5) > 4) ) {
       this.addSkill(this.job.skillGrowth);
     }
     this.job.nextYear(this);

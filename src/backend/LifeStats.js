@@ -1,5 +1,6 @@
 import { random, sample, filter, includes, reduce } from 'lodash';
 import history from '../history';
+import Cookies from 'js-cookie';
 import { unemployed, nonJobWork, extraTimeLessons } from './database';
 import User from './User';
 
@@ -486,6 +487,7 @@ export default class LifeStats {
       user.money = 0;
     }
     if (this.health <= 0) {
+      Cookies.remove('save');
       history.go(0);
     }
     if (this.happiness <= 0) {

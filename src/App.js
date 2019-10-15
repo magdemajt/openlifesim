@@ -15,6 +15,7 @@ import InfoSnackbar from './pages/components/InfoSnackbar';
 import CarsPage from './pages/CarsPage';
 import Person from './backend/Person';
 import RelationsPage from './pages/RelationsPage';
+import Cookies from 'js-cookie';
 
 const MAIN_PAGE = 0;
 const JOBS_PAGE = 1;
@@ -30,16 +31,29 @@ function App() {
   const [user, setUser] = useState(generateUser());
 
   useEffect(() => {
-    const newUser = updateUser(user);
-    const parents = Person.generateParents(user);
-    newUser.parents = parents;
-    const howManyBrothers = random(0, 3);
-    for (let i = 0; i<howManyBrothers; i+=1) {
-      Person.generateSibling(newUser)
-    }
-    setUser(updateUser(newUser))
+    // const save = Cookies.getJSON('save');
+    // if (save !== undefined && save.user !== undefined) {
+    //   // console.log(save.user)
+    //   // const newUser = save.user;
+    //   // setUser(updateUser(newUser))
+    //   // setYear(save.year);
+    // } else {
+      const newUser = updateUser(user);
+      const parents = Person.generateParents(user);
+      newUser.parents = parents;
+      const howManyBrothers = random(0, 3);
+      for (let i = 0; i<howManyBrothers; i+=1) {
+        Person.generateSibling(newUser)
+      }
+      setUser(updateUser(newUser))
+    // }
     //eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    Cookies.set('save', { year, ...Cookies.getJSON('save') }, { expires: Date.now() + 3600 * 1000  });
+    //eslint-disable-next-line
+  }, [year]);
 
 
   const [info, setInfo] = useState('');
@@ -57,6 +71,7 @@ function App() {
     setUser(updateUser(user));
   }
   const gameOver = () => {
+    Cookies.remove('save');
     history.go(0);
   }
 
