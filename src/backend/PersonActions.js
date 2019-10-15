@@ -27,19 +27,16 @@ const checkRelationChange = (person) => {
 }
 
 export const askForMoney = (user = new User(), person = new Person(), amount) => {
-  if (user.timeLeft() > 0){
-    addOneInteraction(user);
-  } 
-  else {
-    return false;
-  }
   function askMoneyFail () {
     person.relation -= random(5, 15);
+  }
+  if (user.timeLeft() <= 0){
+    return false;
   }
   if (amount < 0) {
     return false;
   } 
-  else{
+  else {
     if (person.money > 0) {
       const percentageOfMoney = Math.round(amount / person.money * 100);
       const chanceOfGetting = Math.max(100 - percentageOfMoney * percentageOfMoney * 2 + person.relation/10, 5);   /*new coeff*/
@@ -55,58 +52,38 @@ export const askForMoney = (user = new User(), person = new Person(), amount) =>
           checkRelationChange(person);
           return true;
         }
-
-        if (amount <= 500) {
-          if (random(0, 100) < chance) {
+        function checkChance (amount, chance) {
+          if (amount <= 20000 && random(95, 100)) {
+            giveAskedMoney(amount);
+          }
+          else if (amount <= 10000 && random(80, 100) < chance) {
+            giveAskedMoney(amount);
+          }
+          else if (amount <= 5000 && random(50, 100) < chance) {
+            giveAskedMoney(amount);
+          }
+          else if( amount <= 2000 && random(20, 100) < chance) { 
+            giveAskedMoney(amount);
+          }
+          else if (amount <= 500 && random(0, 100 < chance)) {
             giveAskedMoney(amount);
           }
           else {
             askMoneyFail();
             return false;
           }
+          return true;
         }
-        else if( amount <= 2000) {
-          if (random(20, 100) < chance) {  
-            giveAskedMoney(amount);
-          }
-          else {
-            askMoneyFail();
-            return false;
-          }
+        if (checkChance(amount, chance)) {
+          addOneInteraction(user);
+          return true;
         }
-        else if (amount <= 5000) {
-          if (random(50, 100) < chance){
-            giveAskedMoney(amount);
-          }
-          else {
-            askMoneyFail();
-            return false;
-          }
-        }
-        else if (amount <= 10000) {
-          if (random(80, 100) < chance) {
-            giveAskedMoney(amount);
-          }
-          else {
-            askMoneyFail();
-            return false;
-          }
-        }
-        else if (amount <= 20000) {
-          if (random(95, 100) < chance) {
-            giveAskedMoney(amount);
-          }
-          else {
-            askMoneyFail();
-            return false;
-          } 
-        }
-        else {
-          askMoneyFail();
-          return false;
-        }
-        return true;
+        else return false;
       }
+    }
+    else {
+      askMoneyFail();
+      return false;
     }
   }
   askMoneyFail();
