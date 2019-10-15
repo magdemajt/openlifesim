@@ -402,7 +402,7 @@ export default class LifeStats {
     const jobTime = (includes(nonJobWork, user.job.name) ? 0 : 8);
     const houseTime = this.investorTrait ? 0 : Math.floor(user.houses.length / 3);
     const extraTimeLessonsTime = reduce(this.extraLessons, ((sum, lesson) => lesson.active ? sum + lesson.time : sum), 0)
-    return 24 - this.selectedFood.timeDecay - this.selectedParty.timeDecay - this.sleepTime - (jobTime) - houseTime - extraTimeLessonsTime;
+    return 24 - this.selectedFood.timeDecay - this.selectedParty.timeDecay - this.sleepTime - (jobTime) - houseTime - extraTimeLessonsTime - user.interactionsMade;
   }
 
   changeSleepTime = (newTime, user) => {

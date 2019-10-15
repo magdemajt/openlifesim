@@ -1,9 +1,12 @@
 import User from "./User";
 import { random } from 'lodash';
 import Person from "./Person";
-import { FAMILY_RELATION, LOVE_RELATION, MATES_RELATION, FRIENDS_RELATION } from "./database";
+import { FAMILY_RELATION, LOVE_RELATION, MATES_RELATION, FRIENDS_RELATION, student } from "./database";
+import timeLeft from "./User"
 
 const coeff = 0.2;
+
+const addOneInteraction = (user) => {user.interactionsMade += 1;};
 
 const checkRelationChange = (person) => {
   if ((person.relationType === MATES_RELATION || person.relationType === 0) && person.relation >= 60) {
@@ -24,21 +27,75 @@ const checkRelationChange = (person) => {
 }
 
 export const askForMoney = (user = new User(), person = new Person(), amount) => {
-  if (person.money > 0) {
-    const percentageOfMoney = Math.round(amount / person.money * 100);
-    const chanceOfGetting = Math.max(100 - percentageOfMoney * percentageOfMoney * coeff, 5);
-    if (person.relation > 50 && (person.relationType !== 0 && person.relationType !== MATES_RELATION) && random(0, 100) > 100 - chanceOfGetting && person.money >= amount) {
-      user.addMoney(amount)
-      person.removeMoney(amount);
-      person.relation -= random(1, 5);
-      checkRelationChange(person);
-      return true;
+  function askMoneyFail () {
+    person.relation -= random(5, 15);
+  }
+  if (user.timeLeft() <= 0){
+    return false;
+  }
+  if (amount < 0) {
+    return false;
+  } 
+  else {
+    if (person.money > 0) {
+      const percentageOfMoney = Math.round(amount / person.money * 100);
+      const chanceOfGetting = Math.max(100 - percentageOfMoney * percentageOfMoney * 2 + person.relation/10, 5);   /*new coeff*/
+      if (person.relation > 50 && (person.relationType !== 0 && person.relationType !== MATES_RELATION) && person.money >= amount) {
+        let chance = chanceOfGetting;
+        if ((user.age <= 22 || user.job === student) && chance < 85){
+          chance += 10;
+        }
+        function giveAskedMoney (amount) {
+          user.addMoney(amount);
+          person.removeMoney(amount);
+          person.relation -= random(1, 5);
+          checkRelationChange(person);
+          return true;
+        }
+        function checkChance (amount, chance) {
+          if (amount <= 20000 && random(95, 100)) {
+            giveAskedMoney(amount);
+          }
+          else if (amount <= 10000 && random(80, 100) < chance) {
+            giveAskedMoney(amount);
+          }
+          else if (amount <= 5000 && random(50, 100) < chance) {
+            giveAskedMoney(amount);
+          }
+          else if( amount <= 2000 && random(20, 100) < chance) { 
+            giveAskedMoney(amount);
+          }
+          else if (amount <= 500 && random(0, 100 < chance)) {
+            giveAskedMoney(amount);
+          }
+          else {
+            askMoneyFail();
+            return false;
+          }
+          return true;
+        }
+        if (checkChance(amount, chance)) {
+          addOneInteraction(user);
+          return true;
+        }
+        else return false;
+      }
+    }
+    else {
+      askMoneyFail();
+      return false;
     }
   }
-  person.relation -= random(5, 15);
+  askMoneyFail();
   return false;
 }
 export const giveMoney = (user = new User(), person = new Person(), amount) => {
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
   const increaseInRelation = random(0, 8);
   if (amount <= user.money && amount > 0) {
     user.removeMoney(amount);
@@ -49,6 +106,12 @@ export const giveMoney = (user = new User(), person = new Person(), amount) => {
   return false;
 }
 export const doFriendlyStuff = (user = new User(), person = new Person()) => {
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
   const change = random(-5, 15);
   person.relation += change
   checkRelationChange(person);
@@ -59,6 +122,12 @@ export const doFriendlyStuff = (user = new User(), person = new Person()) => {
 }
 
 export const askToBeADate = (user = new User(), person = new Person()) => {
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
   if (person.relation > 80 && random(1, 2) > 1 ) {
     person.relation += 5;
     person.relationType = LOVE_RELATION;
@@ -71,6 +140,12 @@ export const askToBeADate = (user = new User(), person = new Person()) => {
 }
 
 export const joke = (user = new User(), person = new Person()) => {
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
   if (random(1, 4) > 3) {
     person.relation -= 5;
     checkRelationChange(person);
@@ -82,6 +157,12 @@ export const joke = (user = new User(), person = new Person()) => {
 }
 
 export const talk = (user = new User(), person = new Person()) => {
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
   const change = random(-1, 5);
   person.relation += change
   checkRelationChange(person);
@@ -92,12 +173,24 @@ export const talk = (user = new User(), person = new Person()) => {
 }
 
 export const shoutAt = (user = new User(), person = new Person()) => {
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
   person.relation -= 20;
   checkRelationChange(person);
   user.lifeStats.happiness += 5;
 }
 
 export const assault = (user = new User(), person = new Person()) => {
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
   person.relation = 0;
   checkRelationChange(person);
   if (random(1, 2) > 1) {
@@ -109,6 +202,12 @@ export const assault = (user = new User(), person = new Person()) => {
 }
 
 export const doRomanticStuff = (user = new User(), person = new User()) => {
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
   person.relation += 10;
   user.lifeStats.happiness += 2;
   user.removeMoney(random(500, 1000));
@@ -116,6 +215,12 @@ export const doRomanticStuff = (user = new User(), person = new User()) => {
 }
 
 export const tryForABaby = (user = new User(), person = new Person()) => {
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
   if (random (1, 4) > 3) {
     Person.generateUserChildren(user.gender === 1 ? user : person, user.gender === 0 ? user : person);
     user.lifeStats.happiness += 10;
@@ -125,6 +230,12 @@ export const tryForABaby = (user = new User(), person = new Person()) => {
 }
 ///////////////////////////////////////////////////
 export const propose = (user = new User(), person = new Person()) => {
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
   if (person.relation > 95 && random(1, 10) > 9) {
     user.lifeStats.happiness += 10;
     return true;
@@ -136,6 +247,11 @@ export const propose = (user = new User(), person = new Person()) => {
 }
 
 export const marry = (user = new User(), person = new Person()) => {
-
+  if (user.timeLeft() > 0){
+    addOneInteraction(user);
+  } 
+  else {
+    return false;
+  }
 }
 

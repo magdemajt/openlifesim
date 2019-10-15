@@ -50,6 +50,7 @@ export default class User {
       totalEarnedMoney: 0,
       totalSpentMoney: 0
     }
+    this.interactionsMade = 0;
   }
   static update (oldUser) {
     const user = new User(oldUser.uuid);
@@ -155,6 +156,10 @@ export default class User {
           this.changeSelectedFood(this.lifeStats.foodOptions[0]);
         }
       }
+    }
+
+    const clearInteractions = () => {
+      this.interactionsMade = 0;
     };
 
 
@@ -180,6 +185,7 @@ export default class User {
     
     manageUserSchoolSystem();
     extraLessonNextYearUser();
+    clearInteractions();
   }
   removeMoney = (toPay) => {
     this.money -= toPay;
