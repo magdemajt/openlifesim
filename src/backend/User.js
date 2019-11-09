@@ -43,6 +43,7 @@ export default class User {
     this.house = null;
     this.houses = [];
     this.cars = [];
+    this.businesses = [];
     this.pastJobs = [];
     this.lifeStats = new LifeStats();
     this.livingWithParents = true;
@@ -182,13 +183,18 @@ export default class User {
       });
     }
     this.age += 1;
+
+    forEach(this.businesses, business => {
+      business.nextYear(year, this);
+    })
     
     manageUserSchoolSystem();
     extraLessonNextYearUser();
     clearInteractions();
   }
   removeMoney = (toPay) => {
-    this.money -= toPay;
+    this.money -= Number(toPay);
+    console.log(this.money)
     this.endgameStats.totalSpentMoney += toPay;
   }
 }

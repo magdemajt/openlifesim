@@ -8,6 +8,7 @@ import HouseIcon from '@material-ui/icons/Home';
 import JobIcon from '@material-ui/icons/Work';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PeopleIcon from '@material-ui/icons/People';
+import MoneyIcon from '@material-ui/icons/AttachMoney'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,6 +49,9 @@ export default function SimpleBottomNavigation({setPage, page, user}) {
         <BottomNavigationAction label="Main" value={0} icon={<PlayIcon />} className={classes.firstIconMargin} />
         {user !== undefined && user.age >= 16 ? (
           <BottomNavigationAction label="Jobs" value={1} icon={<JobIcon />}/>
+        ) : null}
+        {user !== undefined && user.age >= 16 ? (
+          <BottomNavigationAction label="Businesses" value={7} icon={<MoneyIcon />}/>
         ) : null}
         {/* {user !== undefined && user.age >= 16 ? (
           <BottomNavigationAction label="Careers" value={6} icon={<JobIcon />}/>

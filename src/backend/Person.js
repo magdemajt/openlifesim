@@ -35,10 +35,9 @@ export default class Person extends User {
       const randomNumber = generateNormalizedRandomNumber();
       const luckNumber = maxLuckyNumber > 0 ? Math.min(maxLuckyNumber, randomNumber) : randomNumber;
       const posibleJobs = filter(jobs, (job) => (job.salary / 1000 <= luckNumber && job.name !== 'Genius'));
-      console.log(posibleJobs)
       return sample(posibleJobs);
     }
-    this.skills = findRandomJobToGetSkills().requirement;
+    this.skills = {...availableSkills, ...findRandomJobToGetSkills().requirement};
   };
 
   nextYearPerson = (setInfo, setColor, year, triggerSiblingsUpdate = true, triggerChildrenUpdate = false) => {
@@ -203,13 +202,7 @@ export default class Person extends User {
     
     generatedFather.randomizeSkills();
     generatedMother.randomizeSkills();
-    if (generatedFather.lifeStats.geniusTrait) {
-      generatedFather.addSkill(5);
-    }
-    if (generatedMother.lifeStats.geniusTrait) {
-      generatedMother.addSkill(5);
-    }
-    
+
     const motherJobs = sortBy(generateJobs(generatedMother, 0), 'currentSalary');
     const fatherJobs = sortBy(generateJobs(generatedFather, 0), 'currentSalary');
     generatedFather.job = fatherJobs[fatherJobs.length - 1];

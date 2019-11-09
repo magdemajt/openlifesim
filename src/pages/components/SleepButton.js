@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 
-export default function SleepButton({ setCanClose, canClose, onClick, children, ...props}) {
+const sleepTime = 3;
+
+export default function SleepButton({ setCanClose, timeLeft, canClose, onClick, children, ...props}) {
   const [timeSleep, setTimeSleep] = useState(0);
 
   useEffect(() => {
@@ -29,13 +31,13 @@ export default function SleepButton({ setCanClose, canClose, onClick, children, 
   const onClickSleep = (e) => {
     if (timeSleep === 0) {
       onClick(e);
-      setTimeSleep(5);
+      setTimeSleep(sleepTime);
       setCanClose(false);
     }
   }
   
   return (
-      <Button onClick={onClickSleep} disabled={timeSleep > 0} {...props}>
+      <Button onClick={onClickSleep} disabled={timeSleep > 0 || timeLeft === 0} {...props}>
         {timeSleep > 0 ? timeSleep + 's' : children}
       </Button>
   );

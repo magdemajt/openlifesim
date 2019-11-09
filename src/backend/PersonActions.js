@@ -53,6 +53,7 @@ export const askForMoney = (user = new User(), person = new Person(), amount) =>
           return true;
         }
         function checkChance (amount, chance) {
+          let givenMoney = true;
           if (amount <= 20000 && random(95, 100)) {
             giveAskedMoney(amount);
           }
@@ -70,9 +71,9 @@ export const askForMoney = (user = new User(), person = new Person(), amount) =>
           }
           else {
             askMoneyFail();
-            return false;
+            givenMoney = false;
           }
-          return true;
+          return givenMoney;
         }
         if (checkChance(amount, chance)) {
           addOneInteraction(user);

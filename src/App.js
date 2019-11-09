@@ -16,6 +16,7 @@ import CarsPage from './pages/CarsPage';
 import Person from './backend/Person';
 import RelationsPage from './pages/RelationsPage';
 import Cookies from 'js-cookie';
+import BusinessPage from './pages/BusinessPage';
 
 const MAIN_PAGE = 0;
 const JOBS_PAGE = 1;
@@ -24,6 +25,7 @@ const CARRERS_PAGE = 6;
 const CARS_PAGE = 3;
 const RELATIONS_PAGE = 4;
 const FOOD_PAGE = 5;
+const BUSINESS_PAGE = 7;
 
 function App() {
   const [year, setYear] = useState(random(1960, 2019));
@@ -93,6 +95,9 @@ function App() {
     }
     if (page === RELATIONS_PAGE) {
       return <RelationsPage user={user} year={year} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />
+    }
+    if (page === BUSINESS_PAGE) {
+      return <BusinessPage user={user} year={year} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />
     }
     /*if (page === CARRERS_PAGE) {
       return <RelationsPage user={user} year={year} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />

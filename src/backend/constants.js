@@ -21,4 +21,8 @@ export const availableSkills = {
   science: 0,
   coordination: 0,
 };
-export const gameVersion = '1.0-beta';
+export const xsmallProductMaxPrice = 10000;
+export const smallProductMaxPrice = 1000;
+export const mediumProductMaxPrice = 100;
+export const bigProductMaxPrice = 10;
+export const gameVersion = '1.2-beta Alexandra';

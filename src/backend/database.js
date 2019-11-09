@@ -6,6 +6,7 @@ import { random, filter, sample, forEach } from 'lodash';
 import HouseOffer from "./HouseOffer";
 import CarOffer from "./CarOffer";
 import ExtraTimeLesson from "./ExtraTimeLesson";
+import BusinessBrand from './BusinessBrand';
 
 export const houses = [
   new House('Studio Apartment', 1, 1, 1.3),
@@ -207,8 +208,7 @@ export const jobs = [
     }, 
     { 
       knowledge: 2, 
-      logic: 2, 
-      logic: 2 ,
+      logic: 2,
       programming: 2
     }
   ),
@@ -872,6 +872,12 @@ export const generateCars = (user, currentYear) => {
   }
   return carsToBuy;
 };
+
+export const brands = [
+  new BusinessBrand('Food', 1980, 3, 2),
+  new BusinessBrand('Cars', 2001, 1, 2),
+  new BusinessBrand('Mobile Phones', 2007, 2, 2),
+];
 
 export const birthMateOffset = 4;
 export const skillMateOffset = 2;
