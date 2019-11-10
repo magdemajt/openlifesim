@@ -49,12 +49,14 @@ export default function BusinessCreateDialog({ user, setUser, opened, setOpened,
       setInfo("You don't have enough money.");
       return false;
     }
-    const createdBusiness = new Business(newBusiness.name, newBusiness.brand, newBusiness.startingMoney);
-    console.log(user.money, newBusiness.startingMoney)
-    user.removeMoney(newBusiness.startingMoney);
-    setNewBusiness({...defaultBusiness});
-    user.businesses.push(createdBusiness);
-    setUser(updateUser(user));
+    const name = newBusiness.name.trim();
+    if (name !== "" && !isNaN(newBusiness.startingMoney)) {
+      const createdBusiness = new Business(name, newBusiness.brand, parseInt(newBusiness.startingMoney));
+      user.removeMoney(newBusiness.startingMoney);
+      setNewBusiness({...defaultBusiness});
+      user.businesses.push(createdBusiness);
+      setUser(updateUser(user));
+    }
   }
 
   function handleClose() {

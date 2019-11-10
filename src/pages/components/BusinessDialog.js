@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     marginTop: theme.spacing(1),
+    width: '100%'
   },
   textField: {
     width: '100%'
@@ -76,32 +77,78 @@ export default function BusinessDialog({ user, setUser, business = new Business(
     setAmount(0);
     setUser(updateUser(user));
   }
+  function upgradeKnowledge () {
+    business.upgradeKnowledge();
+    setUser(updateUser(user));
+  }
+  function addCompanyMoney () {
+    business.addMoney(user, amount);
+    setAmount(0);
+    setUser(updateUser(user));
+  }
+  function buyMarketSize() {
+    business.buyMarketSize();
+    setUser(updateUser(user));
+  }
 
   function generateContent () {
     return (
-    <React.Fragment>
-      <Typography color="textPrimary" className={classes.centerize}>
-        Name: {business.name}
-      </Typography>
-      <Typography color="textPrimary" className={classes.centerize}>
-        Available money: {<NumberFormat displayType="text" value={business.companyMoney} thousandSeparator={true}  />}
-      </Typography>
-      <Typography color="textPrimary" className={classes.centerize}>
-        Market share: {Math.round(business.percentageOfMarket)}%
-      </Typography>
-      <Typography color="textPrimary" className={classes.centerize}>
-        Brand: {business.brand.name}
-      </Typography>
-      <Typography color="textPrimary" className={classes.centerize}>
-        Marketing expenses: {<NumberFormat displayType="text" value={business.marketingMoney} thousandSeparator={true}  />}
-      </Typography>
-      <Typography color="textPrimary" className={classes.centerize}>
-        Other expenses: {<NumberFormat displayType="text" value={business.yearlyExpenses} thousandSeparator={true}  />}
-      </Typography>
-      <Typography color="textPrimary" className={classes.centerize}>
-        Yearly earnings: {<NumberFormat displayType="text" value={business.yearlyEarnings} thousandSeparator={true}  />}
-      </Typography>
-      <Grid container justify="center" alignContent="center">
+    <Grid container justify="center" alignItems="center">
+      <Grid item xs={12}>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Name: {business.name}
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Available money:
+        </Typography>
+        <Typography color="textSecondary" className={classes.centerize}>
+          {<NumberFormat displayType="text" value={business.companyMoney} thousandSeparator={true}  />}
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Market share: {Math.round(business.percentageOfMarket)}%
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Brand: {business.brand.name}
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Market research level: {<NumberFormat displayType="text" value={business.knowledgeLevel} thousandSeparator={true}  />}
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Market research upgrade cost:
+        </Typography>
+        <Typography color="textSecondary" className={classes.centerize}>
+          {<NumberFormat displayType="text" value={business.calculateKnowledgeCost()} thousandSeparator={true}  />}
+        </Typography>
+        {business.customerCounter ? (
+          <React.Fragment>
+            <Typography color="textPrimary" className={classes.centerize}>
+              Potential customers:
+            </Typography>
+            <Typography color="textSecondary" className={classes.centerize}>
+              {<NumberFormat displayType="text" value={business.brand.potencialCustomers} thousandSeparator={true}  />}
+            </Typography>
+          </React.Fragment>
+        ) : null}
+        <Typography color="textPrimary" className={classes.centerize}>
+          Marketing expenses:
+        </Typography>
+        <Typography color="textSecondary" className={classes.centerize}>
+          {<NumberFormat displayType="text" value={business.marketingMoney} thousandSeparator={true}  />}
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Other expenses:
+        </Typography>
+        <Typography color="textSecondary" className={classes.centerize}>
+          {<NumberFormat displayType="text" value={business.yearlyExpenses} thousandSeparator={true}  />}
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Yearly earnings:
+        </Typography>
+        <Typography color="textSecondary" className={classes.centerize}>
+          {<NumberFormat displayType="text" value={business.yearlyEarnings} thousandSeparator={true}  />}
+        </Typography>
+        <Grid container justify="center" alignContent="center">
+      </Grid>
         <TextField
           id="standard-number"
           label="Amount of money"
@@ -115,14 +162,23 @@ export default function BusinessDialog({ user, setUser, business = new Business(
           margin="normal"
         />
       </Grid>
-      <Button onClick={() => payDividend()} variant="outlined">
+      <Button className={classes.button} onClick={() => upgradeKnowledge()} variant="outlined">
+        Invest in market research
+      </Button>
+      <Button className={classes.button} onClick={() => buyMarketSize()} variant="outlined">
+        Buy market size info: {<NumberFormat displayType="text" value={business.calcCustomerCounterPrice()} thousandSeparator={true} prefix={" "} />}
+      </Button>
+      <Button className={classes.button} onClick={() => payDividend()} variant="outlined">
         Pay dividend
       </Button>
-      <Button onClick={() => setProductWindow(true)} variant="outlined">
-        Open new product creation
+      <Button className={classes.button} onClick={() => addCompanyMoney()} variant="outlined">
+        Add company money
+      </Button>
+      <Button className={classes.button} onClick={() => setProductWindow(!productWindow)} variant="outlined">
+        {productWindow ? "Close new product window" : "Open new product creation"}
       </Button>
       {productWindow ? (
-        <React.Fragment>
+        <Grid item xs={12}>
           <Grid container justify="center" alignContent="center">
             <TextField
               id="standard-number"
@@ -151,6 +207,9 @@ export default function BusinessDialog({ user, setUser, business = new Business(
               margin="normal"
             />
           </Grid>
+          <Typography color="textSecondary" className={classes.centerize}>
+            Remember that high price has a diminishing effect on sales.
+          </Typography>
           <Grid container justify="center" alignContent="center">
             <TextField
               id="standard-number"
@@ -166,17 +225,23 @@ export default function BusinessDialog({ user, setUser, business = new Business(
             />
           </Grid>
           <Typography color="textPrimary" className={classes.centerize}>
-            Estimated earnings: {<NumberFormat displayType="text" value={product.earnings || 0} thousandSeparator={true}  />}
+            Estimated earnings:
+          </Typography>
+          <Typography color="textSecondary" className={classes.centerize}>
+            {<NumberFormat displayType="text" value={product.earnings || 0} thousandSeparator={true} prefix={" "} />}
           </Typography>
           <Typography color="textPrimary" className={classes.centerize}>
-            Estimated cost: {<NumberFormat displayType="text" value={product.cost || 0} thousandSeparator={true}  />}
+            Estimated cost:
           </Typography>
-          <Button onClick={() => createProduct()}>
+          <Typography color="textSecondary" className={classes.centerize}>
+            {<NumberFormat displayType="text" value={product.cost || 0} thousandSeparator={true} prefix={" "} />}
+          </Typography>
+          <Button className={classes.button} onClick={() => createProduct()}>
               Create product
           </Button>
-        </React.Fragment>
+        </Grid>
       ) : null}
-    </React.Fragment>
+    </Grid>
     );
   }
 
@@ -192,7 +257,7 @@ export default function BusinessDialog({ user, setUser, business = new Business(
           {business !== null ? generateContent() : null}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button className={classes.button} onClick={handleClose} color="primary">
             Close
           </Button>
         </DialogActions>

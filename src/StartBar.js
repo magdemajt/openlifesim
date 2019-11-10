@@ -37,7 +37,7 @@ export default function StartBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="inherit">
         <Toolbar className={classes.flex}>
           <Avatar className={classes.bigAvatar} src="/logo.png" />
           <Typography className={classes.floatCenter} variant="h6" color="inherit">

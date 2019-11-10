@@ -23,7 +23,7 @@ export default function SimpleAppBar({ user, year }) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="inherit">
         <Toolbar>
           <Typography variant="h6" color="inherit">
             {user.name} {user.surename} 

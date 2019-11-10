@@ -6,7 +6,8 @@ export default class Business {
   constructor (name, brand = new BusinessBrand(), startingMoney = 0) {
     this.name = name;
     this.brand = brand;
-    this.companyMoney = startingMoney;
+    this.companyMoney = parseInt(startingMoney);
+    this.customerCounter = false;
     this.percentageOfMarket = 100 / (brand.competition + 1);
     this.products = [];
     this.yearlyEarnings = 0;
@@ -14,11 +15,37 @@ export default class Business {
     this.earnedMoney = 0;
     this.marketingMoney = 0;
     this.prestigeLevel = 0;
+    this.knowledgeLevel = 0; // Max 20
+    this.knowledgeBias = random(1 - (0.5 - this.knowledgeLevel * 0.025), 1 + (0.5 - this.knowledgeLevel * 0.025));
   }
-  addMoney = (user, money) => {
+  addMoney = (user, moneyStr) => {
+    if (isNaN(moneyStr)) {
+      return false;
+    }
+    const money = parseInt(moneyStr);
     if (user.money >= money) {
-      user.payMoney(money);
-      this.companyMoney += money;
+      user.removeMoney(money);
+      this.companyMoney += (money);
+    }
+  }
+  calcCustomerCounterPrice = () => {
+    return Math.round(1000 * Math.pow(10, this.brand.size) * (1 - this.percentageOfMarket/100));
+  }
+  buyCustomerCounter = () => {
+    const price = this.calcCustomerCounterPrice();
+    if (this.companyMoney >= price) {
+      this.companyMoney -= price;
+      this.customerCounter = true;
+    }
+  }
+  calculateKnowledgeCost = () => {
+    return Math.round(this.knowledgeLevel >= 20 ? 0 : (this.knowledgeLevel + 1) * (this.knowledgeLevel + 1) * Math.pow(10, 2 * this.brand.size) * 1000);
+  }
+  upgradeKnowledge = () => {
+    const cost = this.calculateKnowledgeCost();
+    if (this.companyMoney >= cost && this.knowledgeLevel < 20) {
+      this.companyMoney -= cost;
+      this.knowledgeLevel += 1;
     }
   }
   payDividend = (user, amount) => {
@@ -44,6 +71,7 @@ export default class Business {
     this.companyMoney += this.yearlyEarnings - this.yearlyExpenses;
     this.yearlyEarnings = 0;
     this.yearlyExpenses = 0;
+    this.knowledgeBias = random(1 - (0.5 - this.knowledgeLevel * 0.025), 1 + (0.5 - this.knowledgeLevel * 0.025));
   }
   developMarketing = (user, money) => {
     if (this.companyMoney >= money) {
@@ -72,7 +100,7 @@ export default class Business {
     const maxPrice = size === 0 ? xsmallProductMaxPrice : size === 1 ? smallProductMaxPrice : size === 2 ? mediumProductMaxPrice : size === 3 ? bigProductMaxPrice : 0;
     const cost = Math.round((amount * precision) * price * random(0.7, 0.9));
     const earnings = Math.round( price * Math.min(amount, this.brand.potencialCustomers * this.percentageOfMarket));
-    return { name, cost, earnings: Math.round(earnings * random(0.6, 1.4)), amount, price };
+    return { name, cost, earnings: Math.round(earnings * this.knowledgeBias), amount, price };
   }
 
 }

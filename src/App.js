@@ -17,6 +17,8 @@ import Person from './backend/Person';
 import RelationsPage from './pages/RelationsPage';
 import Cookies from 'js-cookie';
 import BusinessPage from './pages/BusinessPage';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 const MAIN_PAGE = 0;
 const JOBS_PAGE = 1;
@@ -104,6 +106,8 @@ function App() {
     }*/
   };
 
+  
+
   return (
     <div className="App">
       <SimpleAppBar user={user} year={year} />
@@ -113,5 +117,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
