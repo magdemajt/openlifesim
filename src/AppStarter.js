@@ -13,10 +13,13 @@ export default function AppStarter() {
         primary: '#ddd',
         secondary: '#aaa'
       },
-      main: '#aaa',
+      main: '#303030',
       background: {
         default: '#303030',
-        paper: '#282828'
+        paper: '#282828',
+      },
+      action: {
+        disabled: '#aaa'
       }
     }
   }));

@@ -13,10 +13,12 @@ export default class Business {
     this.yearlyEarnings = 0;
     this.yearlyExpenses = 0;
     this.earnedMoney = 0;
-    this.marketingMoney = 0;
+    this.marketingLevel = 0;
+    this.efficiencyLevel = 0;
     this.prestigeLevel = 0;
     this.knowledgeLevel = 0; // Max 20
     this.knowledgeBias = random(1 - (0.5 - this.knowledgeLevel * 0.025), 1 + (0.5 - this.knowledgeLevel * 0.025));
+    this.costBias = random(0.9, 0.99);
   }
   addMoney = (user, moneyStr) => {
     if (isNaN(moneyStr)) {
@@ -41,11 +43,31 @@ export default class Business {
   calculateKnowledgeCost = () => {
     return Math.round(this.knowledgeLevel >= 20 ? 0 : (this.knowledgeLevel + 1) * (this.knowledgeLevel + 1) * Math.pow(10, 2 * this.brand.size) * 1000);
   }
+  calculateMarketingCost = () => {
+    return Math.round(this.marketingLevel >= 20 ? 0 : (this.marketingLevel + 1) * (this.marketingLevel + 1) * Math.pow(10, 2 * this.brand.size) * 1000);
+  }
+  calculateEfficiencyCost = () => {
+    return Math.round(this.efficiencyLevel >= 20 ? 0 : (this.efficiencyLevel + 1) * (this.efficiencyLevel + 1) * Math.pow(10, 2 * this.brand.size) * 1000);
+  }
   upgradeKnowledge = () => {
     const cost = this.calculateKnowledgeCost();
     if (this.companyMoney >= cost && this.knowledgeLevel < 20) {
       this.companyMoney -= cost;
       this.knowledgeLevel += 1;
+    }
+  }
+  upgradeMarketing = () => {
+    const cost = this.calculateMarketingCost();
+    if (this.companyMoney >= cost && this.knowledgeLevel < 100) {
+      this.companyMoney -= cost;
+      this.marketingLevel += 1;
+    }
+  }
+  upgradeEfficiency = () => {
+    const cost = this.calculateProductCosts();
+    if (this.companyMoney >= cost && this.knowledgeLevel < 100) {
+      this.companyMoney -= cost;
+      this.efficiencyLevel += 1;
     }
   }
   payDividend = (user, amount) => {
@@ -55,13 +77,9 @@ export default class Business {
     }
   }
   recalculateMarketShare = () => {
-    const marketShareFromMarketing = Math.floor(this.brand.competition/(Math.max(this.marketingMoney + 10000, this.brand.potencialCustomers * 1000)) * (this.marketingMoney))
-    return Math.max(100 / (this.brand.competition + 1 - marketShareFromMarketing) + this.prestigeLevel, 99); 
+    return Math.max(100 / (this.brand.competition + 1) + this.prestigeLevel, 99); 
   }
   nextYear = (year, user) => {
-    if (this.companyMoney > this.marketingMoney) {
-      this.companyMoney -= this.marketingMoney; 
-    }
     this.percentageOfMarket = this.recalculateMarketShare();
     if (this.yearlyEarnings + this.companyMoney < this.yearlyExpenses) {
       const newEarnings = (this.yearlyEarnings + this.companyMoney)/this.yearlyExpenses * this.yearlyEarnings;
@@ -72,18 +90,26 @@ export default class Business {
     this.yearlyEarnings = 0;
     this.yearlyExpenses = 0;
     this.knowledgeBias = random(1 - (0.5 - this.knowledgeLevel * 0.025), 1 + (0.5 - this.knowledgeLevel * 0.025));
+    this.costBias = random(0.7, 0.9);
   }
-  developMarketing = (user, money) => {
-    if (this.companyMoney >= money) {
-      this.marketingMoney = money;
+  calculateProductCosts = (price, amount) => {
+    const productAveragePrice = (1 - 0.05 * this.marketingLevel) * this.brand.productAveragePrice;
+    const productAverageCost = (1 - 0.05 * this.efficiencyLevel) * this.brand.productAverageCost;
+    let sold = 0;
+    if (price < productAveragePrice) {
+      sold = Math.min(amount, Math.round(this.brand.potencialCustomers * this.percentageOfMarket));
+    } else {
+      const amountToSell = Math.min(amount, this.percentageOfMarket / 100 * this.brand.potencialCustomers)
+      sold = Math.round(amountToSell * Math.exp(-Math.pow((price /(this.brand.productAveragePrice) - 1), 2)/(2 * this.brand.priceDistribution*this.brand.priceDistribution))/(this.brand.priceDistribution * Math.sqrt(2 * Math.PI)))
     }
+    const cost = Math.round(amount * productAverageCost * this.costBias);
+    const earnings = price * sold;
+    const amountReal = sold;
+    console.log(amountReal, earnings, cost, this.brand)
+    return { cost, earnings, amountReal };
   }
   createProduct = (name, price, amount, precision = 1) => {
-    const size = this.brand.size;
-    const maxPrice = size === 0 ? xsmallProductMaxPrice : size === 1 ? smallProductMaxPrice : size === 2 ? mediumProductMaxPrice : size === 3 ? bigProductMaxPrice : 0;
-    const cost = Math.round((amount * precision) * price * random(0.7, 0.9));
-    const earnings = Math.round(Math.min(maxPrice, price) * Math.min(amount, this.brand.potencialCustomers * this.percentageOfMarket));
-    const amountReal = Math.round(earnings /  Math.min(amount, this.brand.potencialCustomers * this.percentageOfMarket)); //amount of sold items
+    const { earnings, cost, amountReal } = this.calculateProductCosts(price, amount);
     if (cost <= this.companyMoney) {
       this.yearlyEarnings += earnings;
       this.companyMoney -= cost;
@@ -92,14 +118,10 @@ export default class Business {
       this.companyMoney = 0;
     }
     this.products.push({ name, cost, earnings, amountReal, price });
-
     //productMaxPricesForbranchSize
   }
   seeProductCosts = (name, price, amount, precision = 1) => {
-    const size = this.brand.size;
-    const maxPrice = size === 0 ? xsmallProductMaxPrice : size === 1 ? smallProductMaxPrice : size === 2 ? mediumProductMaxPrice : size === 3 ? bigProductMaxPrice : 0;
-    const cost = Math.round((amount * precision) * price * random(0.7, 0.9));
-    const earnings = Math.round( price * Math.min(amount, this.brand.potencialCustomers * this.percentageOfMarket));
+    const { earnings, cost, amountReal } = this.calculateProductCosts(price, amount);
     return { name, cost, earnings: Math.round(earnings * this.knowledgeBias), amount, price };
   }
 

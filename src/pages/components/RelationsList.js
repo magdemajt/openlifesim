@@ -56,7 +56,7 @@ export default function RelationsList({ user, setModalPerson, setModalOptions })
             </React.Fragment>
           }
         />
-        <IconButton onClick={() => setModal(p, options)}>
+        <IconButton color="inherit" onClick={() => setModal(p, options)}>
           <PlusIcon />
         </IconButton>
       </ListItem>

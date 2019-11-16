@@ -57,7 +57,7 @@ export default function StudyList({ user, setUser, setPage, setInfo, setColor, s
           <ListItem key={job.name + job.companyName} role={undefined} dense button onClick={() => setJob(job)}>
             <ListItemText id={labelId} primary={`${job.name} at ${job.companyName}`} secondary={jobSalaryInfo}  />
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="apply" onClick={() => setJob(job)}>
+              <IconButton edge="end" aria-label="apply" color="inherit" onClick={() => setJob(job)}>
                 <AddIcon />
               </IconButton>
             </ListItemSecondaryAction>

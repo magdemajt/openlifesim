@@ -55,8 +55,13 @@ export default class JobOffer {
     });
     if (meetRequirements && intersection(newPastJobs, this.job.requiredJobs).length === this.job.requiredJobs.length) {
       if (user.lifeStats.happiness >= 0 || this.name === 'Unemployed' || this.name === 'Student') {
+        const oldJob = user.job;
         user.job = this;
         user.pastJobs = newPastJobs;
+        if (user.timeLeft() < 0) {
+          user.job = oldJob;
+          return false;
+        }
         return true;
       }
     }

@@ -81,13 +81,21 @@ export default function BusinessDialog({ user, setUser, business = new Business(
     business.upgradeKnowledge();
     setUser(updateUser(user));
   }
+  function upgradeMarketing () {
+    business.upgradeMarketing();
+    setUser(updateUser(user));
+  }
+  function upgradeEfficiency () {
+    business.upgradeEfficiency();
+    setUser(updateUser(user));
+  }
   function addCompanyMoney () {
     business.addMoney(user, amount);
     setAmount(0);
     setUser(updateUser(user));
   }
   function buyMarketSize() {
-    business.buyMarketSize();
+    business.buyCustomerCounter();
     setUser(updateUser(user));
   }
 
@@ -111,6 +119,24 @@ export default function BusinessDialog({ user, setUser, business = new Business(
           Brand: {business.brand.name}
         </Typography>
         <Typography color="textPrimary" className={classes.centerize}>
+          Marketing level: {<NumberFormat displayType="text" value={business.marketingLevel} thousandSeparator={true}  />}
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Marketings upgrade cost:
+        </Typography>
+        <Typography color="textSecondary" className={classes.centerize}>
+          {<NumberFormat displayType="text" value={business.calculateMarketingCost()} thousandSeparator={true}  />}
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Production efficiency level: {<NumberFormat displayType="text" value={business.efficiencyLevel} thousandSeparator={true}  />}
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
+          Production efficiency upgrade cost:
+        </Typography>
+        <Typography color="textSecondary" className={classes.centerize}>
+          {<NumberFormat displayType="text" value={business.calculateEfficiencyCost()} thousandSeparator={true}  />}
+        </Typography>
+        <Typography color="textPrimary" className={classes.centerize}>
           Market research level: {<NumberFormat displayType="text" value={business.knowledgeLevel} thousandSeparator={true}  />}
         </Typography>
         <Typography color="textPrimary" className={classes.centerize}>
@@ -128,7 +154,14 @@ export default function BusinessDialog({ user, setUser, business = new Business(
               {<NumberFormat displayType="text" value={business.brand.potencialCustomers} thousandSeparator={true}  />}
             </Typography>
           </React.Fragment>
-        ) : null}
+        ) : (<React.Fragment>
+            <Typography color="textPrimary" className={classes.centerize}>
+              Market info price:
+            </Typography>
+            <Typography color="textSecondary" className={classes.centerize}>
+              {<NumberFormat displayType="text" value={business.calcCustomerCounterPrice()} thousandSeparator={true}  />}
+            </Typography>
+          </React.Fragment>)}
         <Typography color="textPrimary" className={classes.centerize}>
           Marketing expenses:
         </Typography>
@@ -165,9 +198,17 @@ export default function BusinessDialog({ user, setUser, business = new Business(
       <Button className={classes.button} onClick={() => upgradeKnowledge()} variant="outlined">
         Invest in market research
       </Button>
-      <Button className={classes.button} onClick={() => buyMarketSize()} variant="outlined">
-        Buy market size info: {<NumberFormat displayType="text" value={business.calcCustomerCounterPrice()} thousandSeparator={true} prefix={" "} />}
+      <Button className={classes.button} onClick={() => upgradeEfficiency()} variant="outlined">
+        Invest in production upgrade
       </Button>
+      <Button className={classes.button} onClick={() => upgradeMarketing()} variant="outlined">
+        Invest in marketing upgrade
+      </Button>
+      {!business.customerCounter ? (
+        <Button className={classes.button} onClick={() => buyMarketSize()} variant="outlined">
+          Buy market size info
+        </Button>
+      ) : null}
       <Button className={classes.button} onClick={() => payDividend()} variant="outlined">
         Pay dividend
       </Button>
@@ -225,6 +266,12 @@ export default function BusinessDialog({ user, setUser, business = new Business(
             />
           </Grid>
           <Typography color="textPrimary" className={classes.centerize}>
+            Average brand product price:
+          </Typography>
+          <Typography color="textSecondary" className={classes.centerize}>
+            {<NumberFormat displayType="text" value={business.brand.productAveragePrice} thousandSeparator={true} prefix={" "} />}
+          </Typography>
+          <Typography color="textPrimary" className={classes.centerize}>
             Estimated earnings:
           </Typography>
           <Typography color="textSecondary" className={classes.centerize}>
@@ -237,7 +284,7 @@ export default function BusinessDialog({ user, setUser, business = new Business(
             {<NumberFormat displayType="text" value={product.cost || 0} thousandSeparator={true} prefix={" "} />}
           </Typography>
           <Button className={classes.button} onClick={() => createProduct()}>
-              Create product
+            Create product
           </Button>
         </Grid>
       ) : null}

@@ -168,6 +168,7 @@ export default class User {
       this.addSkill(this.job.skillGrowth);
     }
     this.job.nextYear(this);
+    forEach(this.job.jobMates, jobmate => jobmate.nextYearPerson(setInfo, setColor, year));
     
     userParentsNextYear();
     siblingsAndChildrenNextYear();
@@ -194,7 +195,6 @@ export default class User {
   }
   removeMoney = (toPay) => {
     this.money -= Number(toPay);
-    console.log(this.money)
     this.endgameStats.totalSpentMoney += toPay;
   }
 }

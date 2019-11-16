@@ -26,6 +26,9 @@ const useStyles = makeStyles(theme => ({
     overflowY: 'auto',
     alignItems: 'center',
     display: 'flex'
+  },
+  colorPaper: {
+    background: theme.palette.background.default
   }
 }));
 
@@ -74,7 +77,7 @@ export default function LifeStatsTabs({ user, setUser, setColor, setInfo }) {
 
   return (
     <React.Fragment>
-      <AppBar position="static" color="default">
+      <AppBar position="static" className={classes.colorPaper} color="inherit">
         <Tabs
           value={value}
           onChange={handleChange}

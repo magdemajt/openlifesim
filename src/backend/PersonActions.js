@@ -40,7 +40,7 @@ export const askForMoney = (user = new User(), person = new Person(), amount) =>
     if (person.money > 0) {
       const percentageOfMoney = Math.round(amount / person.money * 100);
       const chanceOfGetting = Math.max(100 - percentageOfMoney * percentageOfMoney * 2 + person.relation/10, 5);   /*new coeff*/
-      if (person.relation > 50 && (person.relationType !== 0 && person.relationType !== MATES_RELATION) && person.money >= amount) {
+      if (person.relation > 50 && (person.relationType !== 0 && person.relationType !== MATES_RELATION) && person.money >= amount && user.money < person.job.currentSalary) {
         let chance = chanceOfGetting;
         if ((user.age <= 22 || user.job === student) && chance < 85){
           chance += 10;

@@ -1,7 +1,7 @@
-import { random } from 'lodash';
+import { random, sample } from 'lodash';
 
 export default class BusinessBrand {
-  constructor (name, boomYear, size, boomSizeChange) {
+  constructor (name, boomYear, size, boomSizeChange, productAveragePrice = 0) {
     this.potencialCustomers = 0;
     this.boomYear = boomYear;
     this.boomSizeChange = boomSizeChange;
@@ -9,6 +9,9 @@ export default class BusinessBrand {
     this.name = name;
     this.size = size;
     this.potencialCustomers = 0;
+    this.productAveragePrice = productAveragePrice;
+    this.priceDistribution = 0;
+    this.productAverageCost = 0;
     this.competition = 0;
     this.reactionTime = random(2, 8); // time of reaction after market changes
     if (this.reactionTime + boomYear === this.breakYear) {
@@ -16,6 +19,14 @@ export default class BusinessBrand {
     }
     this.addCompetition({});
     this.addCustomers({});
+    this.generatePricesAndCosts();
+  }
+  generatePricesAndCosts = () => {
+    if (this.productAveragePrice === 0) {
+      this.productAveragePrice = Math.round(sample([10, 100, 1000, 10000, 100000]) * random(0.6, 1.4));
+    }
+    this.productAverageCost = Math.round(random(0.85, 0.99) * this.productAveragePrice);
+    this.priceDistribution = random(0.35, 0.6);
   }
   addCompetition = ({offset = 0, multiplier = 1}) => {
     switch (this.size) {
@@ -52,6 +63,9 @@ export default class BusinessBrand {
       break;
       default:
         this.potencialCustomers = 0;
+    }
+    if (this.potencialCustomers < 0) {
+      this.potencialCustomers = -this.potencialCustomers;
     }
     this.potencialCustomers = Math.round(this.potencialCustomers);
   }
