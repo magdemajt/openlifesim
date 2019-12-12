@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     marginTop: theme.spacing(1),
+    width: '100%'
   },
   textField: {
     width: '100%'
@@ -68,35 +69,41 @@ export default function BusinessCreateDialog({ user, setUser, opened, setOpened,
     return (
     <React.Fragment>
       <Grid container justify="center" alignContent="center">
-        <TextField
-          id="standard-number"
-          label="Company name"
-          value={newBusiness.name}
-          onChange={(e) => setNewBusiness({...newBusiness, name: e.target.value})}
-          type="text"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          margin="normal"
-        />
+        <Grid item xs={12}>
+          <TextField
+            id="standard-number"
+            label="Company name"
+            value={newBusiness.name}
+            onChange={(e) => setNewBusiness({...newBusiness, name: e.target.value})}
+            type="text"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
+        </Grid>
       </Grid>
       <Grid container justify="center" alignContent="center">
-        <TextField
-          id="standard-number"
-          label="Starting money"
-          value={newBusiness.startingMoney}
-          onChange={(e) => setNewBusiness({...newBusiness, startingMoney: !isNaN(e.target.value) || e.target.value === "" ? (e.target.value) : 0})}
-          type="number"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          margin="normal"
-        />
+        <Grid item xs={12}>
+          <TextField
+            id="standard-number"
+            label="Starting money"
+            value={newBusiness.startingMoney}
+            onChange={(e) => setNewBusiness({...newBusiness, startingMoney: !isNaN(e.target.value) || e.target.value === "" ? (e.target.value) : 0})}
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+          />
+        </Grid>
       </Grid>
-      <BrandList setSelectedBrand={(brand) => setNewBusiness({ ...newBusiness, brand })} selectedBrand={newBusiness.brand} />
-      <Button onClick={() => createBusiness()}>
+      <Grid item xs={12}>
+        <BrandList setSelectedBrand={(brand) => setNewBusiness({ ...newBusiness, brand })} selectedBrand={newBusiness.brand} />
+      </Grid>
+      <Button className={classes.button} onClick={() => createBusiness()}>
         Create company
       </Button>
     </React.Fragment>
