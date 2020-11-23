@@ -1,17 +1,17 @@
 import React from 'react';
-import App from './App';
-import StartPage from './StartPage';
 import { responsiveFontSizes, createMuiTheme, CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
+import App from './App';
+import StartPage from './StartPage';
 
 export default function AppStarter() {
   const [started, setStarted] = React.useState(false);
 
-  let theme = responsiveFontSizes(createMuiTheme({
+  const theme = responsiveFontSizes(createMuiTheme({
     palette: {
       text: {
         primary: '#ddd',
-        secondary: '#aaa'
+        secondary: '#aaa',
       },
       main: '#303030',
       background: {
@@ -19,21 +19,23 @@ export default function AppStarter() {
         paper: '#282828',
       },
       action: {
-        disabled: '#aaa'
-      }
-    }
+        disabled: '#aaa',
+      },
+    },
   }));
 
   if (started) {
-
-    return (<ThemeProvider theme={theme}>
+    return (
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <App />
-      </ThemeProvider>);
+      </ThemeProvider>
+    );
   }
-  return <ThemeProvider theme={theme}>
+  return (
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <StartPage setStarted={setStarted} />
     </ThemeProvider>
-
+  );
 }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Paper, Grid, Typography, Button } from '@material-ui/core';
+import {
+  Box, Paper, Grid, Typography, Button,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import JobList from './components/JobList';
 import StudyList from './components/StudyList';
@@ -8,7 +10,7 @@ import { updateUser } from '../backend/User';
 import RelationsList from './components/RelationsList';
 import RelationsDialog from './components/RelationsDialog';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flex: 1,
     height: 'calc(100vh - 160px)',
@@ -22,23 +24,25 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   button: {
     width: '50%',
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   container: {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
     maxHeight: '500px',
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 }));
 
-function RelationsPage ({ user, year, setUser, setPage, setColor, setInfo }) {
-  const classes = useStyles();  
+function RelationsPage({
+  user, setUser, setPage, setColor, setInfo,
+}) {
+  const classes = useStyles();
 
   const [modalPerson, setModalPerson] = React.useState(null);
   const [modalOptions, setModalOptions] = React.useState({ });
@@ -46,9 +50,26 @@ function RelationsPage ({ user, year, setUser, setPage, setColor, setInfo }) {
   return (
     <Grid container className={classes.root} justify="center" alignItems="center">
       <Grid item xs={6} className={classes.container}>
-        <RelationsList user={user} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} setModalPerson={setModalPerson} setModalOptions={setModalOptions} />
+        <RelationsList
+          user={user}
+          setUser={setUser}
+          setPage={setPage}
+          setColor={setColor}
+          setInfo={setInfo}
+          setModalPerson={setModalPerson}
+          setModalOptions={setModalOptions}
+        />
       </Grid>
-      <RelationsDialog user={user} setColor={setColor} setInfo={setInfo} setUser={setUser} options={modalOptions} setPerson={setModalPerson} person={modalPerson} setOptions={setModalOptions} />
+      <RelationsDialog
+        user={user}
+        setColor={setColor}
+        setInfo={setInfo}
+        setUser={setUser}
+        options={modalOptions}
+        setPerson={setModalPerson}
+        person={modalPerson}
+        setOptions={setModalOptions}
+      />
     </Grid>
   );
 }

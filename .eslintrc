@@ -1,0 +1,37 @@
+{
+  "plugins": [
+    "react"
+  ],
+  "parser": "babel-eslint",
+  "extends": ["airbnb"],
+  "rules": {
+    "jsx-quotes": ["error", "prefer-double"],
+    "require-await": "error",
+    "arrow-parens": "error",
+    "block-spacing": "error",
+    "camelcase": "warn",
+    "indent": ["error", 2],
+    "no-useless-return": "warn",
+    "comma-dangle": ["error", "always-multiline"],
+    "no-const-assign": "error",
+    "radix": "warn",
+    "no-unused-vars": "error",
+    "no-undef": "warn",
+    "prefer-template": "error",
+    "no-trailing-spaces": "error",
+    "no-unneeded-ternary": "warn",
+    "no-self-assign": "warn",
+    "no-self-compare": "warn",
+    "default-case": "warn",
+    "no-shadow": "error",
+    "no-plusplus": "error",
+    "semi": "error",
+    "quotes": [2, "single"],
+    "object-curly-spacing": ["error", "always"],
+    "import/extensions": "off",
+    "linebreak-style": ["warn", "windows"],
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "react/jsx-filename-extension": "off"
+  }
+}

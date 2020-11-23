@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Navigation from './Navigation';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import { random } from 'lodash';
+import Cookies from 'js-cookie';
+import Navigation from './Navigation';
 import './App.css';
-import { updateUser, generateUser } from './backend/User';
+import { generateUser, updateUser } from './backend/User';
 import MainPage from './pages/MainPage';
 import SimpleAppBar from './SimpleAppBar';
-import { unemployed, student } from './backend/database';
 import history from './history';
 import HousePage from './pages/HousePage';
 import JobPage from './pages/JobPage';
@@ -15,10 +14,7 @@ import InfoSnackbar from './pages/components/InfoSnackbar';
 import CarsPage from './pages/CarsPage';
 import Person from './backend/Person';
 import RelationsPage from './pages/RelationsPage';
-import Cookies from 'js-cookie';
 import BusinessPage from './pages/BusinessPage';
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 
 const MAIN_PAGE = 0;
 const JOBS_PAGE = 1;
@@ -42,77 +38,107 @@ function App() {
     //   // setUser(updateUser(newUser))
     //   // setYear(save.year);
     // } else {
-      const newUser = updateUser(user);
-      const parents = Person.generateParents(user);
-      newUser.parents = parents;
-      const howManyBrothers = random(0, 3);
-      for (let i = 0; i<howManyBrothers; i+=1) {
-        Person.generateSibling(newUser)
-      }
-      setUser(updateUser(newUser))
+    const newUser = updateUser(user);
+    newUser.parents = Person.generateParents(user);
+    const howManyBrothers = random(0, 3);
+    for (let i = 0; i < howManyBrothers; i += 1) {
+      Person.generateSibling(newUser);
+    }
+    setUser(updateUser(newUser));
     // }
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    Cookies.set('save', { year, ...Cookies.getJSON('save') }, { expires: Date.now() + 3600 * 1000  });
-    //eslint-disable-next-line
+    Cookies.set('save', {
+      year, ...Cookies.getJSON('save'),
+    }, { expires: Date.now() + 3600 * 1000 });
+    // eslint-disable-next-line
   }, [year]);
-
 
   const [info, setInfo] = useState('');
   const [color, setColor] = useState('info');
-  
-  const changePage = (page) => {
-    // if (user.age >= 16) {
-      setPage(page);
-    // }
-  }
+
+  const changePage = (newPage) => {
+    setPage(newPage);
+  };
 
   const nextYear = () => {
     user.nextYear(setInfo, setColor, year);
     setYear(year + 1);
     setUser(updateUser(user));
-  }
+  };
   const gameOver = () => {
     Cookies.remove('save');
     history.go(0);
-  }
+  };
 
   const generateContent = () => {
     if (page === MAIN_PAGE) {
-      return <MainPage user={user} year={year} nextYear={nextYear} />
+      return <MainPage user={user} year={year} nextYear={nextYear} />;
     }
     if (page === JOBS_PAGE) {
-      return <JobPage user={user} year={year} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />
+      return (
+        <JobPage
+          user={user}
+          year={year}
+          setUser={setUser}
+          setPage={setPage}
+          setColor={setColor}
+          setInfo={setInfo}
+        />
+      );
     }
     if (page === HOUSES_PAGE) {
-      return <HousePage user={user} year={year} setUser={setUser} />
+      return <HousePage user={user} year={year} setUser={setUser} />;
     }
     if (page === CARS_PAGE) {
-      return <CarsPage user={user} setUser={setUser} year={year} />
+      return <CarsPage user={user} setUser={setUser} year={year} />;
     }
     if (page === FOOD_PAGE) {
-      return <LifeStatsPage user={user} year={year} setUser={setUser} setPage={setPage} setInfo={setInfo} setColor={setColor} />
+      return (
+        <LifeStatsPage
+          user={user}
+          year={year}
+          setUser={setUser}
+          setPage={setPage}
+          setInfo={setInfo}
+          setColor={setColor}
+        />
+      );
     }
     if (page === RELATIONS_PAGE) {
-      return <RelationsPage user={user} year={year} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />
+      return (
+        <RelationsPage
+          user={user}
+          year={year}
+          setUser={setUser}
+          setPage={setPage}
+          setColor={setColor}
+          setInfo={setInfo}
+        />
+      );
     }
     if (page === BUSINESS_PAGE) {
-      return <BusinessPage user={user} year={year} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />
+      return (
+        <BusinessPage
+          user={user}
+          year={year}
+          setUser={setUser}
+          setPage={setPage}
+          setColor={setColor}
+          setInfo={setInfo}
+        />
+      );
     }
-    /*if (page === CARRERS_PAGE) {
-      return <RelationsPage user={user} year={year} setUser={setUser} setPage={setPage} setColor={setColor} setInfo={setInfo} />
-    }*/
+    return null;
   };
-
-  
 
   return (
     <div className="App">
       <SimpleAppBar user={user} year={year} />
       {generateContent()}
-      <Navigation setPage={changePage} page={page} user={user}/>
+      <Navigation setPage={changePage} page={page} user={user} />
       <InfoSnackbar info={info} setInfo={setInfo} color={color} />
     </div>
   );

@@ -12,14 +12,13 @@ import TvIcon from '@material-ui/icons/Tv';
 import WorkIcon from '@material-ui/icons/WorkOutline';
 import FoodPanel from './FoodPanel';
 import EntertainmentPanel from './EntertainmentPanel';
-import { Grid } from '@material-ui/core';
 import ExtraWorkPanel from './ExtraWorkPanel';
 
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: 500,
-    
+
   },
   box: {
     justifyContent: 'center',
@@ -102,7 +101,7 @@ export default function LifeStatsTabs({ user, setUser, setColor, setInfo }) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        {user.age >= 16 ? (    
+        {user.age >= 16 ? (
           <TabPanel value={value} index={0} dir={theme.direction}>
             <FoodPanel user={user} setUser={setUser} />
           </TabPanel>

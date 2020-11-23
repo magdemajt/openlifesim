@@ -8,13 +8,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { isEqual } from 'lodash';
 import User, { updateUser } from '../../backend/User';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
     maxHeight: '480px',
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
 }));
 
@@ -22,7 +22,7 @@ export default function EntertainmentPanel({ user = new User(), setUser }) {
   const classes = useStyles();
   const [checked, setChecked] = React.useState(user.lifeStats.selectedParty);
 
-  const handleToggle = newChecked => () => {
+  const handleToggle = (newChecked) => () => {
     const success = user.changeSelectedParty(newChecked);
     if (success) {
       setChecked(newChecked);
@@ -32,11 +32,17 @@ export default function EntertainmentPanel({ user = new User(), setUser }) {
 
   return (
     <List className={classes.root}>
-      {user.lifeStats.partyOptions.map(partyOption => {
+      {user.lifeStats.partyOptions.map((partyOption) => {
         const labelId = `checkbox-list-label-${partyOption.name}`;
 
         return (
-          <ListItem key={partyOption.name} role={undefined} dense button onClick={handleToggle(partyOption)}>
+          <ListItem
+            key={partyOption.name}
+            role={undefined}
+            dense
+            button
+            onClick={handleToggle(partyOption)}
+          >
             <ListItemIcon>
               <Checkbox
                 edge="end"
@@ -46,7 +52,7 @@ export default function EntertainmentPanel({ user = new User(), setUser }) {
                 inputProps={{ 'aria-labelledby': labelId }}
               />
             </ListItemIcon>
-            <ListItemText id={labelId} primary={`${partyOption.name}`} secondary={`Price: ${partyOption.price} Time: ${partyOption.timeDecay}`}/>
+            <ListItemText id={labelId} primary={`${partyOption.name}`} secondary={`Price: ${partyOption.price} Time: ${partyOption.timeDecay}`} />
           </ListItem>
         );
       })}

@@ -7,17 +7,17 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
+import { ListSubheader } from '@material-ui/core';
 import { generateHouses, brands } from '../../backend/database';
-import { ListItemSecondaryAction, IconButton, Switch, ListSubheader } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: '100%',
     margin: 'auto',
-    [theme.breakpoints.down('sm')]:{
-      marginBottom: theme.spacing(10)
-    }
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing(10),
+    },
   },
   paper: {
     // [theme.breakpoints.up('sm')]: {
@@ -59,27 +59,31 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(0.5, 0),
   },
   secondaryAction: {
-    display: 'flex'
+    display: 'flex',
   },
   marginLeft: {
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
   },
 }));
 
 export default function BrandList({ selectedBrand, setSelectedBrand }) {
   const classes = useStyles();
-  const generateBrandSize = (brand) => {
-    return brand.size === 0 ? 'small' : (brand.size === 1 ? 'medium' : (brand.size === 2 ? 'big' : brand.size === 3 ? 'GIANT' : 'Strange'))
-  } 
+  const generateBrandSize = (brand) => (brand.size === 0 ? 'small' : (brand.size === 1 ? 'medium' : (brand.size === 2 ? 'big' : brand.size === 3 ? 'GIANT' : 'Strange')));
 
-  const brandList = items => (
+  const brandList = (items) => (
     <Paper className={classes.paper}>
-      <List dense component="div" role="list" style={{width: '100%', height: '100%'}} subheader={
-        <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
-          Available brands
-        </ListSubheader>
-      }>
-        {brands.map(brand => {
+      <List
+        dense
+        component="div"
+        role="list"
+        style={{ width: '100%', height: '100%' }}
+        subheader={(
+          <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
+            Available brands
+          </ListSubheader>
+        )}
+      >
+        {brands.map((brand) => {
           const labelId = `transfer-list-item-${brand.name}-label`;
 
           return (

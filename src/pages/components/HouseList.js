@@ -9,20 +9,22 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { reduce, isEqual } from 'lodash';
+import {
+  ListItemSecondaryAction, IconButton, Switch, ListSubheader,
+} from '@material-ui/core';
+import NumberFormat from 'react-number-format';
 import { updateUser } from '../../backend/User';
 import { generateHouses } from '../../backend/database';
-import { ListItemSecondaryAction, IconButton, Switch, ListSubheader } from '@material-ui/core';
 import HouseOffer from '../../backend/HouseOffer';
-import NumberFormat from 'react-number-format';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: '100%',
     margin: 'auto',
-    [theme.breakpoints.down('sm')]:{
-      marginBottom: theme.spacing(10)
-    }
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing(10),
+    },
   },
   paper: {
     // [theme.breakpoints.up('sm')]: {
@@ -64,19 +66,19 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(0.5, 0),
   },
   secondaryAction: {
-    display: 'flex'
+    display: 'flex',
   },
   marginLeft: {
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
   },
 }));
 
 function not(a, b) {
-  return a.filter(value => b.indexOf(value) === -1);
+  return a.filter((value) => b.indexOf(value) === -1);
 }
 
 function intersection(a, b) {
-  return a.filter(value => b.indexOf(value) !== -1);
+  return a.filter((value) => b.indexOf(value) !== -1);
 }
 
 export default function HouseList({ user, houses, setUser }) {
@@ -88,7 +90,7 @@ export default function HouseList({ user, houses, setUser }) {
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
-  const handleToggle = value => () => {
+  const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
 
@@ -106,19 +108,17 @@ export default function HouseList({ user, houses, setUser }) {
     setLeft([]);
   };
 
-  const generatePriceInfo = (house) => {
-    return (
-      <React.Fragment>
-        <NumberFormat value={house.price} displayType="text" thousandSeparator={true} prefix="Price: " />
-        {'  '}
-        <NumberFormat value={house.livingCost} displayType="text" thousandSeparator={true} prefix="Cost: " />
-        {'  '}
-        <NumberFormat value={house.rent} displayType="text" thousandSeparator={true} prefix="Rent: " />
-        {'  '}
-        {house.habitable ? `Rooms: ${house.house.rooms}` : ''}
-      </React.Fragment>
-    )
-  }
+  const generatePriceInfo = (house) => (
+    <>
+      <NumberFormat value={house.price} displayType="text" thousandSeparator prefix="Price: " />
+      {'  '}
+      <NumberFormat value={house.livingCost} displayType="text" thousandSeparator prefix="Cost: " />
+      {'  '}
+      <NumberFormat value={house.rent} displayType="text" thousandSeparator prefix="Rent: " />
+      {'  '}
+      {house.habitable ? `Rooms: ${house.house.rooms}` : ''}
+    </>
+  );
 
   const handleCheckedRight = () => {
     const fromSale = Math.round(reduce(leftChecked, (sum, h) => sum + h.price, 0) * 0.95);
@@ -159,14 +159,20 @@ export default function HouseList({ user, houses, setUser }) {
     }
   };
 
-  const customList = items => (
+  const customList = (items) => (
     <Paper className={classes.paper}>
-      <List dense component="div" role="list" style={{width: '100%', height: '100%'}} subheader={
-        <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
-          Houses to buy
-        </ListSubheader>
-      }>
-        {items.map(house => {
+      <List
+        dense
+        component="div"
+        role="list"
+        style={{ width: '100%', height: '100%' }}
+        subheader={(
+          <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
+            Houses to buy
+          </ListSubheader>
+        )}
+      >
+        {items.map((house) => {
           const labelId = `transfer-list-item-${house.name}-label`;
 
           return (
@@ -188,13 +194,19 @@ export default function HouseList({ user, houses, setUser }) {
     </Paper>
   );
 
-  const userHousesList = items => (
+  const userHousesList = (items) => (
     <Paper className={classes.paperWithUser}>
-      <List dense component="div" role="list" style={{width: '100%', height: '100%'}} subheader={
-        <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
-          User's houses
-        </ListSubheader>
-      }>
+      <List
+        dense
+        component="div"
+        role="list"
+        style={{ width: '100%', height: '100%' }}
+        subheader={(
+          <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
+            User's houses
+          </ListSubheader>
+        )}
+      >
         {items.map((house, index) => {
           const labelId = `transfer-list-item-${house.name}-label`;
 
@@ -208,31 +220,31 @@ export default function HouseList({ user, houses, setUser }) {
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`${house.name}`} secondary={generatePriceInfo(house)}/>
+              <ListItemText id={labelId} primary={`${house.name}`} secondary={generatePriceInfo(house)} />
               <ListItemSecondaryAction className={classes.secondaryAction}>
-              { house.rentable ? (
-              <React.Fragment>
-                <ListItemText id="switch-list-label-rent" primary="Rent" />
-                  <Switch
-                    edge="end"
-                    onChange={() => rent(house)}
-                    checked={house.rented}
-                    inputProps={{ 'aria-labelledby': 'switch-list-label-rent' }}
-                  />
-              </React.Fragment>
-            ): null}
-            { house.habitable ? (
-              <React.Fragment>
-                <ListItemText className={classes.marginLeft} id="switch-list-label-live" primary="Live" />
-                  <Switch
-                    edge="end"
-                    onChange={() => setHouseAsLiving(house)}
-                    checked={isEqual(house, user.house)}
-                    inputProps={{ 'aria-labelledby': 'switch-list-label-live' }}
-                  />
-              </React.Fragment>
-              ): null}
-              </ListItemSecondaryAction> 
+                { house.rentable ? (
+                  <>
+                    <ListItemText id="switch-list-label-rent" primary="Rent" />
+                    <Switch
+                      edge="end"
+                      onChange={() => rent(house)}
+                      checked={house.rented}
+                      inputProps={{ 'aria-labelledby': 'switch-list-label-rent' }}
+                    />
+                  </>
+                ) : null}
+                { house.habitable ? (
+                  <>
+                    <ListItemText className={classes.marginLeft} id="switch-list-label-live" primary="Live" />
+                    <Switch
+                      edge="end"
+                      onChange={() => setHouseAsLiving(house)}
+                      checked={isEqual(house, user.house)}
+                      inputProps={{ 'aria-labelledby': 'switch-list-label-live' }}
+                    />
+                  </>
+                ) : null}
+              </ListItemSecondaryAction>
             </ListItem>
           );
         })}

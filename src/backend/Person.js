@@ -1,5 +1,9 @@
-import { random, sample, filter, reduce, sortBy, forEach, chunk, shuffle } from 'lodash';
-import { birthMateOffset, skillMateOffset, jobs, houses, cars, student, unemployed, child, generateJobs, getEducation, MATES_RELATION, FAMILY_RELATION, retired } from './database';
+import {
+  random, sample, filter, reduce, sortBy, forEach, chunk, shuffle,
+} from 'lodash';
+import {
+  birthMateOffset, skillMateOffset, jobs, houses, cars, student, unemployed, child, generateJobs, getEducation, MATES_RELATION, FAMILY_RELATION, retired,
+} from './database';
 import User from './User';
 import HouseOffer from './HouseOffer';
 import JobOffer from './JobOffer';
@@ -12,7 +16,7 @@ function map_range(value, low1, high1, low2, high2) {
 }
 
 export default class Person extends User {
-  constructor (gender = random(0, 1)) {
+  constructor(gender = random(0, 1)) {
     super();
     this.deathAge = 0;
     this.gender = gender;
@@ -21,7 +25,6 @@ export default class Person extends User {
     this.relation = 0;
     this.relationType = 0;
     this.generateNames();
-    
   }
 
   randomizeSkills = (maxLuckyNumber = 0) => {
@@ -30,14 +33,14 @@ export default class Person extends User {
         return random(31, 80);
       }
       return random(15, 40);
-    }
+    };
     const findRandomJobToGetSkills = () => {
       const randomNumber = generateNormalizedRandomNumber();
       const luckNumber = maxLuckyNumber > 0 ? Math.min(maxLuckyNumber, randomNumber) : randomNumber;
       const posibleJobs = filter(jobs, (job) => (job.salary / 1000 <= luckNumber && job.name !== 'Genius'));
       return sample(posibleJobs);
-    }
-    this.skills = {...availableSkills, ...findRandomJobToGetSkills().requirement};
+    };
+    this.skills = { ...availableSkills, ...findRandomJobToGetSkills().requirement };
   };
 
   nextYearPerson = (setInfo, setColor, year, triggerSiblingsUpdate = true, triggerChildrenUpdate = false) => {
@@ -50,13 +53,12 @@ export default class Person extends User {
           const inheritedMoney = Math.round(this.money / this.children.length);
           const houses = chunk(this.houses, Math.ceil(this.houses.length / this.children.length));
           let i = 0;
-          forEach(this.children, child => {
+          forEach(this.children, (child) => {
             child.addMoney(inheritedMoney > 0 ? inheritedMoney : 0);
-            if (houses[i] !== undefined)
-              child.houses.push(...houses[i]);
-            i+=1;
+            if (houses[i] !== undefined) child.houses.push(...houses[i]);
+            i += 1;
           });
-          return {money: inheritedMoney, housesLength: Math.ceil(this.houses.length / this.children.length), died: true};
+          return { money: inheritedMoney, housesLength: Math.ceil(this.houses.length / this.children.length), died: true };
         }
       }
       if (this.age === 16) {
@@ -72,6 +74,7 @@ export default class Person extends User {
       }
     }
   }
+
   randomizeDeathAge = () => {
     if (random(0, 50) > 49) {
       this.deathAge = random(17, 50);
@@ -81,27 +84,31 @@ export default class Person extends User {
   }
 
   checkBetterJobs = () => {
-    const genJobs = filter(generateJobs(this, 0), job => job.currentSalary > this.job.currentSalary);
+    const genJobs = filter(generateJobs(this, 0), (job) => job.currentSalary > this.job.currentSalary);
     if (genJobs.length > 0) {
       this.job = sample(genJobs);
     }
-
   }
 
   randomizeHouses = () => {
     if (random(0, 100) > 80) {
       let housesAmount = random(1, 6);
-      if(this.lifeStats.investorTrait && random(1, 5) > 4) {
-        housesAmount += random(10, 20);    
+      if (this.lifeStats.investorTrait && random(1, 5) > 4) {
+        housesAmount += random(10, 20);
       }
-      for (let i = 0; i < housesAmount; i+=1) {
-        const personHouse = new HouseOffer(sample(filter(houses, house => ((house.rooms * 40000 * house.priceCoeff) <= this.job.currentSalary * 20 && house.rentable))));
+      for (let i = 0; i < housesAmount; i += 1) {
+        const personHouse = new HouseOffer(
+          sample(filter(
+            houses,
+            (house) => ((house.rooms * 40000 * house.priceCoeff) <= this.job.currentSalary * 20 && house.rentable),
+          )),
+        );
         personHouse.maximizeRent();
         personHouse.rented = true;
         this.houses.push(personHouse);
       }
     }
-    const personHouse = new HouseOffer(sample(filter(houses, house => ((house.rooms * 40000 * house.priceCoeff) <= this.job.currentSalary * 6) && house.habitable)));
+    const personHouse = new HouseOffer(sample(filter(houses, (house) => ((house.rooms * 40000 * house.priceCoeff) <= this.job.currentSalary * 6) && house.habitable)));
     this.houses.push(personHouse);
     this.house = personHouse;
   }
@@ -110,7 +117,7 @@ export default class Person extends User {
   //   if (random(0, 100) > 20) {
   //     let carsAmount = random(1, 2);
   //     if (random(0, 20) > 19) {
-  //       carsAmount += random(3, 7);    
+  //       carsAmount += random(3, 7);
   //     }
   //     for (let i = 0; i < carsAmount; i+=1) {
   //       const personHouse = new CarOffer(sample(filter(cars, car => (car.price) <= this.job.currentSalary * 20)));
@@ -123,18 +130,19 @@ export default class Person extends User {
   //   this.house = personHouse;
   // }
 
-  static generateWorkMate (user) {
+  static generateWorkMate(user) {
     const generated = new Person();
     generated.age = random(user.age - birthMateOffset, user.age + birthMateOffset);
     generated.randomizeSkills();
-    generated.job = new JobOffer(sample(filter(jobs, job => job.requirement <= user.skills)), user.job.companyName);
+    generated.job = new JobOffer(sample(filter(jobs, (job) => job.requirement <= user.skills)), user.job.companyName);
     generated.addMoney(generated.job.currentSalary * random(3, 7));
     generated.randomizeHouses();
     generated.relation = random(30, 45);
     generated.relationType = MATES_RELATION;
     return generated;
   }
-  static generateJobMate (user) {
+
+  static generateJobMate(user) {
     const generated = new Person();
     generated.age = random(user.age, user.age + birthMateOffset);
     generated.randomizeSkills();
@@ -145,21 +153,24 @@ export default class Person extends User {
     generated.relationType = MATES_RELATION;
     return generated;
   }
-  static generateRandomPerson (user) {
+
+  static generateRandomPerson(user) {
     const generated = new Person();
     generated.age = random(16, 70);
-    generated.job = new JobOffer(sample(filter(jobs, job => job.requirement <= user.skills)));
+    generated.job = new JobOffer(sample(filter(jobs, (job) => job.requirement <= user.skills)));
     generated.randomizeHouses();
     generated.relation = random(0, 10);
   }
-  static generateUnemployed (user) {
+
+  static generateUnemployed(user) {
     const generated = new Person();
     generated.age = random(16, 70);
     generated.job = unemployed;
     generated.randomizeHouses();
     generated.relation = random(0, 10);
   }
-  static generateUserChildren (father, mother) {
+
+  static generateUserChildren(father, mother) {
     const generated = new Person();
     generated.age = 1;
     generated.job = child;
@@ -174,14 +185,16 @@ export default class Person extends User {
     father.children.push(generated);
     mother.children.push(generated);
   }
-  static generateChild (user) {
+
+  static generateChild(user) {
     const generated = new Person();
     generated.age = random(1, 16);
     generated.job = generated.age >= 6 ? student : child;
     generated.relation = random(20, 45);
     generated.relationType = MATES_RELATION;
   }
-  static generateSibling (user) {
+
+  static generateSibling(user) {
     const generated = new Person();
     generated.age = random(user.age, user.age + 10);
     generated.age = user.parents.father.age - generated.age < 16 ? user.parents.father.age - 16 : (user.parents.mother.age - generated.age < 16 ? user.parents.mother.age - 16 : generated.age);
@@ -189,17 +202,18 @@ export default class Person extends User {
     generated.relation = random(60, 95);
     generated.relationType = FAMILY_RELATION;
     generated.parents = user.parents;
-    forEach(generated.parents, par => par.children.push(generated));
+    forEach(generated.parents, (par) => par.children.push(generated));
     generated.siblings.push(user);
     user.siblings.push(generated);
   }
-  static generateParents (user) {
+
+  static generateParents(user) {
     const generatedFather = new Person(1);
     const generatedMother = new Person(0);
 
     generatedFather.age = random(16, 55);
     generatedMother.age = random(16, 50);
-    
+
     generatedFather.randomizeSkills();
     generatedMother.randomizeSkills();
 

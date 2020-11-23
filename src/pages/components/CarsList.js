@@ -9,13 +9,15 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { reduce, isEqual, random } from 'lodash';
+import {
+  ListItemSecondaryAction, IconButton, Switch, ListSubheader,
+} from '@material-ui/core';
+import NumberFormat from 'react-number-format';
 import { updateUser } from '../../backend/User';
 import { generateHouses, generateCars } from '../../backend/database';
-import { ListItemSecondaryAction, IconButton, Switch, ListSubheader } from '@material-ui/core';
 import HouseOffer from '../../backend/HouseOffer';
-import NumberFormat from 'react-number-format';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     margin: 'auto',
   },
@@ -33,19 +35,19 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(0.5, 0),
   },
   secondaryAction: {
-    display: 'flex'
+    display: 'flex',
   },
   marginLeft: {
-    marginLeft: theme.spacing(1)
-  }
+    marginLeft: theme.spacing(1),
+  },
 }));
 
 function not(a, b) {
-  return a.filter(value => b.indexOf(value) === -1);
+  return a.filter((value) => b.indexOf(value) === -1);
 }
 
 function intersection(a, b) {
-  return a.filter(value => b.indexOf(value) !== -1);
+  return a.filter((value) => b.indexOf(value) !== -1);
 }
 
 export default function CarsList({ user, year, setUser }) {
@@ -57,7 +59,7 @@ export default function CarsList({ user, year, setUser }) {
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
-  const handleToggle = value => () => {
+  const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
 
@@ -92,23 +94,27 @@ export default function CarsList({ user, year, setUser }) {
     }
   };
 
-  const carPriceInfo = car => {
-    return (
-    <React.Fragment>
-      <NumberFormat value={car.price} displayType="text" thousandSeparator={true} prefix="Price: " />
-      <NumberFormat value={car.cost} displayType="text" thousandSeparator={true} prefix=" Cost: " />
-    </React.Fragment>
-    );
-  }
+  const carPriceInfo = (car) => (
+    <>
+      <NumberFormat value={car.price} displayType="text" thousandSeparator prefix="Price: " />
+      <NumberFormat value={car.cost} displayType="text" thousandSeparator prefix=" Cost: " />
+    </>
+  );
 
-  const customList = items => (
+  const customList = (items) => (
     <Paper className={classes.paper}>
-      <List dense component="div" role="list" style={{width: '100%', height: '100%'}} subheader={
-        <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
-          Cars to buy
-        </ListSubheader>
-      }>
-        {items.map((car,index) => {
+      <List
+        dense
+        component="div"
+        role="list"
+        style={{ width: '100%', height: '100%' }}
+        subheader={(
+          <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
+            Cars to buy
+          </ListSubheader>
+        )}
+      >
+        {items.map((car, index) => {
           const labelId = `transfer-list-item-${car.name + index}-label`;
 
           return (
@@ -121,7 +127,7 @@ export default function CarsList({ user, year, setUser }) {
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`${car.name}`} secondary={carPriceInfo(car)}/>
+              <ListItemText id={labelId} primary={`${car.name}`} secondary={carPriceInfo(car)} />
             </ListItem>
           );
         })}
@@ -130,18 +136,24 @@ export default function CarsList({ user, year, setUser }) {
     </Paper>
   );
 
-  const userCarsList = items => (
+  const userCarsList = (items) => (
     <Paper className={classes.paperWithUser}>
-      <List dense component="div" role="list" style={{width: '100%', height: '100%'}} subheader={
-        <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
-          User's cars
-        </ListSubheader>
-      }>
+      <List
+        dense
+        component="div"
+        role="list"
+        style={{ width: '100%', height: '100%' }}
+        subheader={(
+          <ListSubheader component="div" disableSticky id="user-houses-list-subheader">
+            User's cars
+          </ListSubheader>
+        )}
+      >
         {items.map((car, index) => {
           const labelId = `transfer-list-item-${car.name + index}-label`;
 
           return (
-            <ListItem key={car.name + `${index}`} role="listitem">
+            <ListItem key={`${car.name}${index}`} role="listitem">
               <ListItemIcon onClick={handleToggle(car)}>
                 <Checkbox
                   checked={checked.indexOf(car) !== -1}
@@ -150,7 +162,7 @@ export default function CarsList({ user, year, setUser }) {
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`${car.name}`} secondary={carPriceInfo(car)}/>
+              <ListItemText id={labelId} primary={`${car.name}`} secondary={carPriceInfo(car)} />
               {/* <ListItemSecondaryAction className={classes.secondaryAction}>
                 <ListItemText id="switch-list-label-rent" primary="More..." />
                   <Switch
